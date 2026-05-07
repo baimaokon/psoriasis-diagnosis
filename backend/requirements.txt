@@ -1,0 +1,15 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+Flask==3.0.3
+Flask-CORS==4.0.1
+Flask-SQLAlchemy==3.1.1
+PyJWT==2.8.0
+Werkzeug==3.0.3
+numpy==1.26.4
+Pillow==10.4.0
+opencv-python-headless==4.10.0.84
+scikit-learn==1.5.1
+torch==2.4.1+cu121
+torchvision==0.19.1+cu121
+PyMySQL==1.1.0          # ← 新增：MySQL 驱动
+python-dotenv==1.0.0    # ← 新增：环境变量管理
+fpdf2==2.7.9            # ← 新增：PDF 报告生成

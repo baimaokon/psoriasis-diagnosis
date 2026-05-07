@@ -1,0 +1,37 @@
+# 敏感信息
+backend/.env
+backend/.secret_key
+backend/.env.example
+
+# 前端
+frontend/node_modules/
+frontend/dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+
+# 存储（上传/热力图/数据集/日志/模型/检查点）
+backend/storage/uploads/*
+backend/storage/heatmaps/*
+backend/storage/datasets/*
+backend/storage/checkpoints/*
+backend/storage/models/*
+backend/storage/logs/*
+!backend/storage/uploads/.gitkeep
+!backend/storage/heatmaps/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 系统
+.DS_Store
+Thumbs.db
+*.bak

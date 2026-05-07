@@ -1,0 +1,36 @@
+# .gitignore
+
+# 敏感信息
+.env
+.secret_key
+
+# SQLite 数据库（已迁移到 MySQL）
+storage/data/app.db
+
+# 日志文件
+storage/logs/*.log
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+.venv/
+
+# IDE 配置
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 上传的临时文件
+storage/uploads/*
+storage/heatmaps/*
+
+# 保留目录结构但忽略内容
+!storage/uploads/.gitkeep
+!storage/heatmaps/.gitkeep

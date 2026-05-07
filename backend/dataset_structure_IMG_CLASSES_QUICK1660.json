@@ -1,0 +1,578 @@
+{
+  "dataset_name": "IMG_CLASSES_QUICK1660",
+  "dataset_root": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660",
+  "total_categories": 10,
+  "categories": [
+    {
+      "class_name": "1. Eczema 1677",
+      "class_id": 1,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "0_27.jpg",
+          "relative_path": "1. Eczema 1677\\0_27.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_27.jpg"
+        },
+        {
+          "filename": "0_31.jpg",
+          "relative_path": "1. Eczema 1677\\0_31.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_31.jpg"
+        },
+        {
+          "filename": "0_24.jpg",
+          "relative_path": "1. Eczema 1677\\0_24.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_24.jpg"
+        },
+        {
+          "filename": "0_12.jpg",
+          "relative_path": "1. Eczema 1677\\0_12.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_12.jpg"
+        },
+        {
+          "filename": "0_20.jpg",
+          "relative_path": "1. Eczema 1677\\0_20.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_20.jpg"
+        },
+        {
+          "filename": "0_6.jpg",
+          "relative_path": "1. Eczema 1677\\0_6.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_6.jpg"
+        },
+        {
+          "filename": "0_40.jpg",
+          "relative_path": "1. Eczema 1677\\0_40.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_40.jpg"
+        },
+        {
+          "filename": "0_37.jpg",
+          "relative_path": "1. Eczema 1677\\0_37.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_37.jpg"
+        },
+        {
+          "filename": "0_5.jpg",
+          "relative_path": "1. Eczema 1677\\0_5.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_5.jpg"
+        },
+        {
+          "filename": "0_34.jpg",
+          "relative_path": "1. Eczema 1677\\0_34.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\1. Eczema 1677\\0_34.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "10. Warts Molluscum and other Viral Infections - 2103",
+      "class_id": 10,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "0_35.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_35.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_35.jpg"
+        },
+        {
+          "filename": "0_17.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_17.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_17.jpg"
+        },
+        {
+          "filename": "0_23.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_23.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_23.jpg"
+        },
+        {
+          "filename": "0_16.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_16.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_16.jpg"
+        },
+        {
+          "filename": "0_22.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_22.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_22.jpg"
+        },
+        {
+          "filename": "0_4.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_4.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_4.jpg"
+        },
+        {
+          "filename": "0_42.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_42.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_42.jpg"
+        },
+        {
+          "filename": "0_33.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_33.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_33.jpg"
+        },
+        {
+          "filename": "0_31.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_31.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_31.jpg"
+        },
+        {
+          "filename": "0_19.jpg",
+          "relative_path": "10. Warts Molluscum and other Viral Infections - 2103\\0_19.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\10. Warts Molluscum and other Viral Infections - 2103\\0_19.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "2. Melanoma 15.75k",
+      "class_id": 2,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "ISIC_6656373.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6656373.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6656373.jpg"
+        },
+        {
+          "filename": "ISIC_6654875.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6654875.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6654875.jpg"
+        },
+        {
+          "filename": "ISIC_6664275.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6664275.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6664275.jpg"
+        },
+        {
+          "filename": "ISIC_6663112.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6663112.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6663112.jpg"
+        },
+        {
+          "filename": "ISIC_6653780.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6653780.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6653780.jpg"
+        },
+        {
+          "filename": "ISIC_6653311.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6653311.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6653311.jpg"
+        },
+        {
+          "filename": "ISIC_6654619.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6654619.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6654619.jpg"
+        },
+        {
+          "filename": "ISIC_6655383.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6655383.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6655383.jpg"
+        },
+        {
+          "filename": "ISIC_6655446.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6655446.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6655446.jpg"
+        },
+        {
+          "filename": "ISIC_6661862.jpg",
+          "relative_path": "2. Melanoma 15.75k\\ISIC_6661862.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\2. Melanoma 15.75k\\ISIC_6661862.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "3. Atopic Dermatitis - 1.25k",
+      "class_id": 3,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "1_15.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_15.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_15.jpg"
+        },
+        {
+          "filename": "1_25.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_25.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_25.jpg"
+        },
+        {
+          "filename": "0_12.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\0_12.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\0_12.jpg"
+        },
+        {
+          "filename": "1_12.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_12.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_12.jpg"
+        },
+        {
+          "filename": "1_23.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_23.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_23.jpg"
+        },
+        {
+          "filename": "1_17.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_17.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_17.jpg"
+        },
+        {
+          "filename": "1_20.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_20.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_20.jpg"
+        },
+        {
+          "filename": "0_6.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\0_6.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\0_6.jpg"
+        },
+        {
+          "filename": "0_0.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\0_0.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\0_0.jpg"
+        },
+        {
+          "filename": "1_1.jpg",
+          "relative_path": "3. Atopic Dermatitis - 1.25k\\1_1.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\3. Atopic Dermatitis - 1.25k\\1_1.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "4. Basal Cell Carcinoma (BCC) 3323",
+      "class_id": 4,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "ISIC_0024432.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024432.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024432.jpg"
+        },
+        {
+          "filename": "ISIC_0024829.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024829.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024829.jpg"
+        },
+        {
+          "filename": "ISIC_0024515.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024515.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024515.jpg"
+        },
+        {
+          "filename": "ISIC_0024573.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024573.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024573.jpg"
+        },
+        {
+          "filename": "ISIC_0024931.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024931.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024931.jpg"
+        },
+        {
+          "filename": "ISIC_0024550.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024550.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024550.jpg"
+        },
+        {
+          "filename": "ISIC_0024665.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024665.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024665.jpg"
+        },
+        {
+          "filename": "ISIC_0024448.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024448.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024448.jpg"
+        },
+        {
+          "filename": "ISIC_0024673.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024673.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024673.jpg"
+        },
+        {
+          "filename": "ISIC_0024331.jpg",
+          "relative_path": "4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024331.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\4. Basal Cell Carcinoma (BCC) 3323\\ISIC_0024331.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "5. Melanocytic Nevi (NV) - 7970",
+      "class_id": 5,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "ISIC_0000020_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000020_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000020_downsampled.jpg"
+        },
+        {
+          "filename": "ISIC_0000047_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000047_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000047_downsampled.jpg"
+        },
+        {
+          "filename": "ISIC_0000015.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000015.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000015.jpg"
+        },
+        {
+          "filename": "ISIC_0000055_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000055_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000055_downsampled.jpg"
+        },
+        {
+          "filename": "ISIC_0000009.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000009.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000009.jpg"
+        },
+        {
+          "filename": "ISIC_0000024_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000024_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000024_downsampled.jpg"
+        },
+        {
+          "filename": "ISIC_0000052_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000052_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000052_downsampled.jpg"
+        },
+        {
+          "filename": "ISIC_0000016.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000016.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000016.jpg"
+        },
+        {
+          "filename": "ISIC_0000012.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000012.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000012.jpg"
+        },
+        {
+          "filename": "ISIC_0000053_downsampled.jpg",
+          "relative_path": "5. Melanocytic Nevi (NV) - 7970\\ISIC_0000053_downsampled.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\5. Melanocytic Nevi (NV) - 7970\\ISIC_0000053_downsampled.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "6. Benign Keratosis-like Lesions (BKL) 2624",
+      "class_id": 6,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "ISIC_0025805.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025805.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025805.jpg"
+        },
+        {
+          "filename": "ISIC_0025986.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025986.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025986.jpg"
+        },
+        {
+          "filename": "ISIC_0025985.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025985.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025985.jpg"
+        },
+        {
+          "filename": "ISIC_0025719.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025719.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025719.jpg"
+        },
+        {
+          "filename": "ISIC_0025874.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025874.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025874.jpg"
+        },
+        {
+          "filename": "ISIC_0025982.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025982.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025982.jpg"
+        },
+        {
+          "filename": "ISIC_0025743.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025743.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025743.jpg"
+        },
+        {
+          "filename": "ISIC_0025781.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025781.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025781.jpg"
+        },
+        {
+          "filename": "ISIC_0025883.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025883.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025883.jpg"
+        },
+        {
+          "filename": "ISIC_0025937.jpg",
+          "relative_path": "6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025937.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\6. Benign Keratosis-like Lesions (BKL) 2624\\ISIC_0025937.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "7. Psoriasis pictures Lichen Planus and related diseases - 2k",
+      "class_id": 7,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "0_48.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_48.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_48.jpg"
+        },
+        {
+          "filename": "0_40.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_40.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_40.jpg"
+        },
+        {
+          "filename": "0_11.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_11.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_11.jpg"
+        },
+        {
+          "filename": "1_44.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_44.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_44.jpg"
+        },
+        {
+          "filename": "0_15.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_15.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_15.jpg"
+        },
+        {
+          "filename": "1_39.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_39.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_39.jpg"
+        },
+        {
+          "filename": "1_29.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_29.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_29.jpg"
+        },
+        {
+          "filename": "0_14.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_14.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_14.jpg"
+        },
+        {
+          "filename": "0_20.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_20.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\0_20.jpg"
+        },
+        {
+          "filename": "1_30.jpg",
+          "relative_path": "7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_30.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\7. Psoriasis pictures Lichen Planus and related diseases - 2k\\1_30.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k",
+      "class_id": 8,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "1_22.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_22.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_22.jpg"
+        },
+        {
+          "filename": "1_36.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_36.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_36.jpg"
+        },
+        {
+          "filename": "0_24.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_24.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_24.jpg"
+        },
+        {
+          "filename": "157_1_2.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\157_1_2.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\157_1_2.jpg"
+        },
+        {
+          "filename": "1_32.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_32.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_32.jpg"
+        },
+        {
+          "filename": "1_11.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_11.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_11.jpg"
+        },
+        {
+          "filename": "0_4.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_4.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_4.jpg"
+        },
+        {
+          "filename": "0_3.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_3.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\0_3.jpg"
+        },
+        {
+          "filename": "163_1_9.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\163_1_9.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\163_1_9.jpg"
+        },
+        {
+          "filename": "1_30.jpg",
+          "relative_path": "8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_30.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\8. Seborrheic Keratoses and other Benign Tumors - 1.8k\\1_30.jpg"
+        }
+      ]
+    },
+    {
+      "class_name": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k",
+      "class_id": 9,
+      "total_images": 40,
+      "sample_images": [
+        {
+          "filename": "4_14.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_14.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_14.jpg"
+        },
+        {
+          "filename": "4_24.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_24.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_24.jpg"
+        },
+        {
+          "filename": "4_48.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_48.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_48.jpg"
+        },
+        {
+          "filename": "4_63.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_63.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\4_63.jpg"
+        },
+        {
+          "filename": "103_4_1.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\103_4_1.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\103_4_1.jpg"
+        },
+        {
+          "filename": "3_0.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\3_0.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\3_0.jpg"
+        },
+        {
+          "filename": "2_3.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\2_3.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\2_3.jpg"
+        },
+        {
+          "filename": "0_8.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\0_8.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\0_8.jpg"
+        },
+        {
+          "filename": "3_6.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\3_6.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\3_6.jpg"
+        },
+        {
+          "filename": "0_11.jpg",
+          "relative_path": "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\0_11.jpg",
+          "absolute_path": "D:\\zy.main\\app\\backend\\storage\\datasets\\IMG_CLASSES_QUICK1660\\9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k\\0_11.jpg"
+        }
+      ]
+    }
+  ],
+  "total_images": 400
+}
