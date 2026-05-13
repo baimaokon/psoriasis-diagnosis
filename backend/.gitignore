@@ -34,3 +34,10 @@ storage/heatmaps/*
 # 保留目录结构但忽略内容
 !storage/uploads/.gitkeep
 !storage/heatmaps/.gitkeep
+
+# 本地敏感文件
+.default_passwords
+
+# 数据集结构快照（暴露内部路径）
+dataset_structure_*.json
+dataset_summary.json

@@ -1,4 +1,5 @@
 import logging
+import secrets
 from pathlib import Path
 
 import click
@@ -23,21 +24,52 @@ def _ensure_storage_dirs(app: Flask):
         path.mkdir(parents=True, exist_ok=True)
 
 
+def _get_or_generate_password(username, env_var, cache_file):
+    """获取默认账户密码，优先级：环境变量 > 缓存文件 > 随机生成"""
+    import os
+    password = os.getenv(env_var)
+    if password:
+        return password
+    if cache_file.exists():
+        try:
+            saved = cache_file.read_text().strip().split("\n")
+            for line in saved:
+                if line.startswith(f"{username}="):
+                    return line.split("=", 1)[1]
+        except Exception:
+            pass
+    password = secrets.token_urlsafe(12)
+    try:
+        entries = cache_file.read_text().strip().split("\n") if cache_file.exists() else []
+        entries = [e for e in entries if e and not e.startswith(f"{username}=")]
+        entries.append(f"{username}={password}")
+        cache_file.write_text("\n".join(entries) + "\n")
+    except Exception:
+        pass
+    return password
+
+
 def _seed_default_accounts_safe():
     """安全地种子化默认账户，避免重复插入"""
+    import os
+    cache_file = Path(os.getenv("DEFAULT_PASSWORDS_FILE", str(Path(__file__).resolve().parent.parent / ".default_passwords")))
     try:
         if not User.query.filter_by(username="admin").first():
+            pw = _get_or_generate_password("admin", "DEFAULT_ADMIN_PASSWORD", cache_file)
             admin = User(username="admin", role=1)
-            admin.set_password("admin123")
+            admin.set_password(pw)
             db.session.add(admin)
             current_app.logger.info("创建管理员账户：admin")
-        
+            print(f"\n{'='*60}\n  默认管理员账户已创建\n  用户名: admin\n  密码: {pw}\n  请妥善保管，登录后建议立即修改密码\n{'='*60}\n")
+
         if not User.query.filter_by(username="demo").first():
+            pw = _get_or_generate_password("demo", "DEFAULT_DEMO_PASSWORD", cache_file)
             demo = User(username="demo", role=0)
-            demo.set_password("demo123")
+            demo.set_password(pw)
             db.session.add(demo)
             current_app.logger.info("创建测试用户账户：demo")
-        
+            print(f"\n{'='*60}\n  演示账户已创建\n  用户名: demo\n  密码: {pw}\n{'='*60}\n")
+
         db.session.commit()
         current_app.logger.info("默认账户创建成功")
     except Exception as e:
@@ -93,7 +125,10 @@ def create_app():
     app.logger.setLevel(logging.DEBUG)
     app.logger.info("=" * 50)
     app.logger.info("应用启动中...")
-    app.logger.info(f"数据库连接：{app.config.get('SQLALCHEMY_DATABASE_URI')}")
+    db_uri = app.config.get('SQLALCHEMY_DATABASE_URI', '')
+    import re
+    db_uri_safe = re.sub(r'://([^:]+):([^@]+)@', r'://\1:***@', db_uri)
+    app.logger.info(f"数据库连接：{db_uri_safe}")
 
     _ensure_storage_dirs(app)
     db.init_app(app)

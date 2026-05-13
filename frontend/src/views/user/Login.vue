@@ -70,14 +70,6 @@
         </el-form>
       </el-card>
 
-      <div class="demo-info">
-        <el-alert
-          title="演示账号：demo / demo123"
-          type="info"
-          :closable="false"
-          show-icon
-        />
-      </div>
     </div>
 
     <div class="background-decoration">
@@ -102,8 +94,8 @@ const formRef = ref(null);
 const loading = ref(false);
 
 const form = reactive({
-  username: "demo",
-  password: "demo123",
+  username: "",
+  password: "",
 });
 
 const rules = {
