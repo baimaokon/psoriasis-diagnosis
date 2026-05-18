@@ -51,7 +51,10 @@ request.interceptors.response.use(
 
       switch (status) {
         case 401:
-          ElMessage.error("登录已过期，请重新登录");
+          ElMessage.error(message || "登录已过期，请重新登录");
+          if (error.config && (error.config.url === "/auth/login" || error.config.url === "/auth/admin/login")) {
+            break;
+          }
           const activeRole = getActiveRole();
           clearRoleAuth(activeRole);
           if (activeRole === "0") {

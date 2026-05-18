@@ -1,4 +1,5 @@
 import json
+import threading
 import uuid
 from pathlib import Path
 
@@ -21,7 +22,7 @@ class InferenceEngine:
     """推理引擎：加载已上线模型，执行图像分类并生成 Grad-CAM 热力图"""
 
     def __init__(self):
-        # 模型缓存：避免每次请求都重新加载模型文件
+        self._lock = threading.Lock()
         self._cached_model_id = None
         self._model = None
         self._class_names = []
@@ -38,38 +39,43 @@ class InferenceEngine:
         if not active:
             raise RuntimeError("当前没有已上线模型，请先在管理端完成训练并上线")
 
-        # 模型未变更则跳过重复加载
+        # 快速路径：无锁检查
         if self._cached_model_id == active.id and self._model is not None:
             return
 
-        labels = active.get_labels()
-        if not labels:
-            try:
-                labels = json.loads(active.labels_json or "[]")
-            except json.JSONDecodeError:
-                labels = []
-        if not labels:
-            raise RuntimeError("模型标签信息缺失，无法推理")
+        with self._lock:
+            # 双重检查：避免并发请求重复加载
+            if self._cached_model_id == active.id and self._model is not None:
+                return
 
-        resolved_model_path = resolve_model_path(
-            active.model_path, current_app.config["MODEL_DIR"]
-        )
-        if not resolved_model_path.exists() or not resolved_model_path.is_file():
-            raise RuntimeError("在线模型文件不存在，请重新训练或重新上线模型")
+            labels = active.get_labels()
+            if not labels:
+                try:
+                    labels = json.loads(active.labels_json or "[]")
+                except json.JSONDecodeError:
+                    labels = []
+            if not labels:
+                raise RuntimeError("模型标签信息缺失，无法推理")
 
-        checkpoint = self._safe_torch_load(
-            str(resolved_model_path), map_location=self._device
-        )
-        model = build_model(active.backbone, len(labels), pretrained=False)
-        state_dict = checkpoint.get("state_dict") or {}
-        self._load_state_dict_compat(model, state_dict)
-        model.eval()
-        model.to(self._device)
+            resolved_model_path = resolve_model_path(
+                active.model_path, current_app.config["MODEL_DIR"]
+            )
+            if not resolved_model_path.exists() or not resolved_model_path.is_file():
+                raise RuntimeError("在线模型文件不存在，请重新训练或重新上线模型")
 
-        self._cached_model_id = active.id
-        self._model = model
-        self._class_names = labels
-        self._image_size = int(checkpoint.get("image_size", 224))
+            checkpoint = self._safe_torch_load(
+                str(resolved_model_path), map_location=self._device
+            )
+            model = build_model(active.backbone, len(labels), pretrained=False)
+            state_dict = checkpoint.get("state_dict") or {}
+            self._load_state_dict_compat(model, state_dict)
+            model.eval()
+            model.to(self._device)
+
+            self._cached_model_id = active.id
+            self._model = model
+            self._class_names = labels
+            self._image_size = int(checkpoint.get("image_size", 224))
 
     @staticmethod
     def _safe_torch_load(path, map_location):
@@ -175,9 +181,10 @@ class InferenceEngine:
         self._load_active_model()
         assert self._model is not None
 
-        pil_image = Image.open(image_path).convert("RGB")
-        original_rgb = np.array(pil_image)
-        input_tensor = self._preprocess(pil_image).to(self._device)
+        with Image.open(image_path) as pil_image:
+            pil_image = pil_image.convert("RGB")
+            original_rgb = np.array(pil_image)
+            input_tensor = self._preprocess(pil_image).to(self._device)
 
         self._model.eval()
         with torch.no_grad():

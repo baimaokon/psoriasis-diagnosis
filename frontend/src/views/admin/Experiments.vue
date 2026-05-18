@@ -51,7 +51,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { LineChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import VChart from 'vue-echarts';
-import axios from 'axios';
+import request from '@/api/request';
 
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent]);
 
@@ -79,8 +79,12 @@ const accOption = computed(() => ({
 }));
 
 const loadErrorCases = async () => {
-  const res = await axios.get('/api/admin/analysis/error-cases');
-  errorCases.value = res.data.data || [];
+  try {
+    const res = await request.get('/admin/analysis/error-cases');
+    errorCases.value = res.data || [];
+  } catch {
+    // 错误已由拦截器统一处理
+  }
 };
 
 onMounted(loadErrorCases);

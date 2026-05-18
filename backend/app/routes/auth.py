@@ -38,7 +38,7 @@ def _login_by_role(expected_role=None):
 
     user = User.query.filter_by(username=username).first()
     if not user or not user.check_password(password):
-        return jsonify(error("账号或密码错误")), 401
+        return jsonify(error("账号或密码错误")), 400
 
     if expected_role is not None and user.role != expected_role:
         return jsonify(error("账号角色不匹配")), 403

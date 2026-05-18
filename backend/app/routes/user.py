@@ -234,9 +234,12 @@ def my_records():
     if end_date:
         query = query.filter(DiagnosisRecord.created_at <= end_date + ' 23:59:59')
     if disease:
-        query = query.filter(DiagnosisRecord.predicted_label_zh.like(f"%{disease}%"))
+        query = query.filter(DiagnosisRecord.prediction_json.like(f"%{disease}%"))
     if min_conf:
-        query = query.filter(DiagnosisRecord.confidence >= float(min_conf))
+        try:
+            query = query.filter(DiagnosisRecord.confidence >= float(min_conf))
+        except (ValueError, TypeError):
+            pass
 
     query = query.order_by(DiagnosisRecord.created_at.desc())
     pagination = query.paginate(page=page, per_page=limit, error_out=False)
