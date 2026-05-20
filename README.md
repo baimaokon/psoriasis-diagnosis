@@ -52,7 +52,8 @@
 │       │   ├── auth.py         # 认证 /api/auth/*
 │       │   ├── user.py         # 用户端 /api/user/*
 │       │   ├── admin.py        # 管理端 /api/admin/*
-│       │   └── feedback.py     # 反馈 /api/feedback/*
+│       │   ├── feedback.py     # 反馈 /api/feedback/*
+│       │   └── test.py         # 健康检查 /api/test/*
 │       ├── services/           # 核心业务逻辑
 │       │   ├── inference_service.py   # 推理引擎 + Grad-CAM + 模型缓存
 │       │   ├── training_service.py    # 训练流程管理 + DDP
@@ -64,7 +65,17 @@
 │       │   ├── auth.py         # JWT 装饰器（login_required）
 │       │   ├── response.py     # 统一响应格式
 │       │   └── label_mapping.py # 疾病标签映射
-│       ├── tests/              # pytest 单元测试（88 个用例）
+│       ├── tests/              # pytest 测试（55 项，与论文对应）
+│       │   ├── test_auth.py             # 认证与鉴权（JC-001/002/009）
+│       │   ├── test_user_routes.py      # 用户端诊断与记录（JC-003/005）
+│       │   ├── test_admin_routes.py     # 管理端接口（JC-006/007/008）
+│       │   ├── test_inference.py        # 推理引擎（JC-008/010）
+│       │   ├── test_dataset_service.py  # 数据集服务（JC-006）
+│       │   ├── test_training_params.py  # 训练参数处理（JC-007）
+│       │   ├── test_label_mapping.py    # 标签映射（JC-004）
+│       │   ├── test_model_factory.py    # 模型构建（JC-010）
+│       │   ├── test_model_path.py       # 模型路径工具
+│       │   └── test_response.py         # 统一响应格式
 │       └── storage/            # 运行时数据存储
 │           ├── uploads/        # 用户上传图片
 │           ├── heatmaps/       # Grad-CAM 热力图
@@ -236,10 +247,26 @@ cp ISIC2020/某类别/*.jpg IMG_CLASSES/类别名/
 
 ```bash
 cd backend
-.\.venv\Scripts\python -m pytest tests/ -v
+python -m pytest tests/ -v            # 全部 55 项
+python -m pytest tests/ -q            # 快速冒烟
+python -m pytest tests/test_auth.py   # 单文件
 ```
 
-测试使用 SQLite 内存数据库（`conftest.py`），无需 MySQL 环境。
+测试使用 SQLite 内存数据库（`conftest.py` 注入 `DATABASE_URL=sqlite:///:memory:`），无需 MySQL 环境。55 个测试方法对应论文 52 项功能测试 + 3 项性能测试，覆盖 10 个测试类。
+
+### 测试与论文对照
+
+| 论文编号 | 测试项目 | 对应测试文件 |
+|---------|---------|-------------|
+| JC-001 | Token 携带 | `test_auth.py` |
+| JC-002 | Token 失效处理 | `test_auth.py` |
+| JC-003 | 图像上传与诊断 | `test_user_routes.py` |
+| JC-005 | 历史记录查询 | `test_user_routes.py` |
+| JC-006 | 数据集统计 | `test_admin_routes.py` / `test_dataset_service.py` |
+| JC-007 | 训练任务管理 | `test_admin_routes.py` / `test_training_params.py` |
+| JC-008 | 模型热更新 | `test_admin_routes.py` / `test_inference.py` |
+| JC-009 | 权限隔离 | `test_auth.py` / `test_admin_routes.py` |
+| JC-010 | 单张推理性能 | `test_model_factory.py` / `test_inference.py` |
 
 ## 配置说明
 
