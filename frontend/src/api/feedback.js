@@ -1,3 +1,11 @@
+/**
+ * api/feedback.js — 反馈 API 封装
+ * ───────────────────────────────
+ * 对接后端 routes/feedback.py（/api/feedback/*）
+ * export: submitFeedback(), getFeedbackStats(), getLabels() 等
+ * 被调方：
+ *   views/user/Diagnose.vue → 诊断结果纠错
+ */
 import request from "./request";
 
 export const getLabels = () => request.get("/feedback/labels");

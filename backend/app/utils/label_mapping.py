@@ -1,3 +1,13 @@
+"""
+label_mapping.py — 疾病标签英文↔中文映射
+─────────────────────────────────────────
+维护 10 类皮肤病的中英文对照表，提供模糊匹配查询。
+消费方：
+  models/diagnosis_record.py → to_dict() 时注入中文病名
+  services/inference_service.py → 推理结果翻译为中文
+  services/dataset_service.py → 数据集类别统计时翻译
+  routes/feedback.py → 纠错时提供可选标签列表
+"""
 LABEL_ZH_MAP = {
     "1. Eczema 1677": "湿疹",
     "2. Melanoma 15.75k": "黑色素瘤",

@@ -1,3 +1,23 @@
+"""
+user.py — 用户端诊断路由（/api/user/*）
+───────────────────────────────────────
+端点：
+  POST /api/user/diagnose       — 单张图像诊断（返回预测+热力图URL）
+  POST /api/user/diagnose/batch — 批量诊断（最多10张，并发处理）
+  GET  /api/user/records        — 分页查询诊断历史（支持按日期/病种/置信度筛选）
+  GET  /api/user/records/<id>/report — 下载 PDF 诊断报告
+全部端点需 @login_required（普通用户 role=0）。
+安全措施：7步文件验证（扩展名→大小→魔数→PIL完整性→尺寸→保存校验）
+依赖：
+  models/diagnosis_record.py → 诊断记录持久化
+  services/inference_service.py → inference_engine.predict() 执行推理
+  services/report_service.py → generate_report_response() 生成 PDF
+前端对接：
+  frontend/src/views/user/Diagnose.vue → 诊断页面
+  frontend/src/views/user/Records.vue → 历史记录页面
+  frontend/src/api/user.js → 所有 API 调用封装
+"""
+
 import io
 import uuid
 from pathlib import Path

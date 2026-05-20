@@ -1,3 +1,25 @@
+"""
+admin.py — 管理端路由（/api/admin/*）
+─────────────────────────────────────
+端点（全部需 @admin_required，仅 role=1 可访问）：
+  仪表盘     GET  /api/admin/dashboard
+  数据集     GET  /api/admin/dataset/summary | samples/random | quality-report | split-visualization
+  训练管理   POST /api/admin/train/start | GET /param-spec | GET /jobs
+             POST /api/admin/train/jobs/<id>/terminate | revive | DELETE
+  模型管理   GET  /api/admin/models | POST /models/<id>/activate | DELETE /models/<id>
+  诊断记录   GET  /api/admin/records | DELETE /api/admin/records/<id>
+  SSE推送    GET  /api/admin/train/stream（长连接，服务端实时推送训练进度）
+  实验对比   GET  /api/admin/experiments/compare
+  错误分析   GET  /api/admin/analysis/error-cases
+SSE 流认证：通过查询参数 ?token= 传递 JWT，在 _decode_admin_stream_token() 中验证
+依赖：
+  所有 models、services/training_service.py（TrainingManager + TrainEventHub）
+  services/dataset_service.py、quality_service.py
+前端对接：
+  frontend/src/views/admin/Dashboard.vue → 管理端仪表盘
+  frontend/src/api/admin.js → 所有管理端 API 调用
+"""
+
 import json
 import queue
 import time

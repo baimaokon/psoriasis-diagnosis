@@ -1,3 +1,14 @@
+"""
+training_job.py — 训练任务表（training_jobs）
+─────────────────────────────────────────────
+字段：id, name, status(queued/running/success/failed/canceled/canceling),
+      dataset_dir, params_json, logs_json, progress, current_epoch, total_epochs,
+      train_loss/val_loss/val_accuracy/val_precision/val_recall/val_f1（实时指标）,
+      model_version_id(FK→model_versions), created_at/updated_at/started_at/finished_at
+消费方：
+  routes/admin.py — 创建/查询/终止/复活训练任务、SSE 进度推送
+  services/training_service.py — TrainingManager 执行训练时持续更新指标字段
+"""
 import json
 from datetime import datetime
 

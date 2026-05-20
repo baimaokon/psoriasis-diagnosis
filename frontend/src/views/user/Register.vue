@@ -1,3 +1,9 @@
+<!--
+Register.vue — 用户注册页
+─────────────────────────
+路由：/register
+功能：用户名+密码+确认密码 → 调用 api/auth.js register() → 成功后跳转 /login
+-->
 <template>
   <div class="register-container">
     <div class="register-box">

@@ -1,3 +1,19 @@
+"""
+report_service.py — PDF 诊断报告生成
+────────────────────────────────────
+职责：
+  基于 DiagnosisReport(FPDF) 生成 A4 中文诊断报告 PDF：
+    - 封面标题 + 基本信息（患者、编号、日期）
+    - 原始图像与 Grad-CAM 热力图并排展示
+    - AI 诊断结论（主诊断+置信度+Top-3 预测表）
+    - 免责声明
+被调方：
+  routes/user.py → /api/user/records/<id>/report 下载端点
+依赖：
+  fpdf2 库、PIL 图像处理
+  读取 storage/ 下的诊断图片和热力图文件
+"""
+
 import io
 from datetime import datetime
 from pathlib import Path

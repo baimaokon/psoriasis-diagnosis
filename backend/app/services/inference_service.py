@@ -1,3 +1,26 @@
+"""
+inference_service.py — 推理引擎
+───────────────────────────────
+职责：
+  InferenceEngine 是系统的核心推理组件，负责：
+  1. 加载当前在线模型（is_active=True）→ _load_active_model()
+     带双重检查锁定的模型缓存，避免并发重复加载
+  2. 图像预处理（ImageNet 标准化） → _preprocess()
+  3. 前向推理获取 Top-3 预测 → predict()
+  4. Grad-CAM 可解释性热力图生成 → _create_gradcam_overlay()
+     通过 hook 捕获最后卷积层的特征图与梯度，
+     全局平均池化梯度作为权重 → 加权求和 → ReLU → 上采样 → 伪彩色叠加
+  5. 兼容 DDP 训练保存的模型权重（module. 前缀处理）→ _load_state_dict_compat()
+被调方：
+  routes/user.py — 单张诊断 /api/user/diagnose、批量诊断 /api/user/diagnose/batch
+依赖：
+  models/model_version.py → 查询 is_active=True 的模型
+  services/model_factory.py → build_model() + find_last_conv_layer()
+  utils/label_mapping.py → 英→中标签翻译
+  utils/model_path.py → 解析模型文件路径
+全局单例：inference_engine = InferenceEngine()
+"""
+
 import json
 import threading
 import uuid

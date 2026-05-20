@@ -1,3 +1,10 @@
+<!--
+Profile.vue — 用户端个人中心页
+───────────────────────────────
+路由：/user/profile
+功能：展示用户基本信息（用户名、角色、注册时间），修改密码。
+后端对接：routes/auth.py → GET /api/auth/profile
+-->
 <template>
   <div class="profile-container">
     <el-card class="profile-card" shadow="hover">

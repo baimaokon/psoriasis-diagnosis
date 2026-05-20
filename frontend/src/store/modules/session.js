@@ -1,3 +1,17 @@
+/**
+ * store/modules/session.js — 用户会话状态模块
+ * ────────────────────────────────────────────
+ * 职责：管理双角色（普通用户/管理员）登录态：
+ *   - 登录时存储 token + user 到 localStorage
+ *   - 支持角色切换（普通用户 ↔ 管理员使用独立 session key）
+ *   - 页面刷新时自动从 localStorage 恢复登录态
+ * 被调方：
+ *   router/index.js → 路由守卫检查 hasRoleSession()
+ *   components/UserLayout.vue → 显示用户名、登出操作
+ *   components/AdminLayout.vue → 显示管理员名、登出操作
+ *   views/user/Login.vue → 登录成功后写入 session
+ *   views/admin/Login.vue → 管理员登录成功后写入 session
+ */
 import { defineStore } from "pinia";
 import {
   clearAuth,

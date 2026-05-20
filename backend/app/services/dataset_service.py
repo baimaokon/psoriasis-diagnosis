@@ -1,3 +1,20 @@
+"""
+dataset_service.py — 数据集服务
+────────────────────────────────
+职责：
+  1. 扫描数据集目录，自动从子目录名识别标签 → list_class_distribution()
+  2. 汇总统计（总图像数、类别数） → get_dataset_summary()
+  3. 构建 (路径, 标签索引) 样本对 → build_classification_samples()
+  4. 分层随机划分训练/验证/测试集 → build_train_val_test_split()
+被调方：
+  routes/admin.py — 数据集摘要、随机样本、划分可视化
+  services/training_service.py — 训练时加载数据和划分
+  services/quality_service.py — 质量分析时扫描数据集
+依赖：
+  无数据库依赖（纯文件系统操作）
+  utils/label_mapping.py → get_label_info() 中英文翻译
+"""
+
 from dataclasses import dataclass
 from pathlib import Path
 

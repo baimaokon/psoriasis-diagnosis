@@ -1,3 +1,15 @@
+<!--
+Records.vue — 用户端诊断历史记录页
+───────────────────────────────────
+路由：/user/records
+功能：
+  - 按时间倒序展示所有历史诊断记录列表
+  - 支持按疾病类型、日期范围、最低置信度筛选
+  - 点击记录可查看详情（原图+热力图+完整预测结果）
+  - 可下载 PDF 诊断报告
+API对接：api/user.js → getRecords()、downloadReport()
+后端对接：routes/user.py → GET /api/user/records、/api/user/records/<id>/report
+-->
 <template>
   <div class="records-container">
     <el-card class="records-card" shadow="hover">

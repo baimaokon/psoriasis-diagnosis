@@ -1,3 +1,12 @@
+"""
+user.py — 用户表（users）
+─────────────────────────
+字段：id, username, password_hash, role(0=普通用户/1=管理员), created_at
+消费方：
+  routes/auth.py — 注册、登录、获取个人信息
+  routes/admin.py — 仪表盘统计普通用户数
+  utils/auth.py — JWT 创建/验证时通过 user_id 查找用户
+"""
 from datetime import datetime
 
 from werkzeug.security import check_password_hash, generate_password_hash

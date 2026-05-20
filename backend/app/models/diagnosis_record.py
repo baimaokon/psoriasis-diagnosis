@@ -1,3 +1,14 @@
+"""
+diagnosis_record.py — 诊断记录表（diagnosis_records）
+─────────────────────────────────────────────────────
+字段：id, user_id(FK→users), image_path, heatmap_path, predicted_label, confidence,
+      prediction_json(Top-3结果JSON), created_at
+消费方：
+  routes/user.py — 单张/批量诊断写入、分页查询历史记录
+  routes/admin.py — 全平台记录管理、删除
+  routes/feedback.py — 反馈提交时校验记录存在性
+  services/report_service.py — 生成 PDF 诊断报告的数据源
+"""
 import json
 from datetime import datetime
 

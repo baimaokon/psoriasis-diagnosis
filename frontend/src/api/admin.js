@@ -1,3 +1,12 @@
+/**
+ * api/admin.js — 管理端 API 封装
+ * ──────────────────────────────
+ * 对接后端 routes/admin.py（/api/admin/*）
+ * export: getDashboard(), getDatasetSummary(), startTraining(), getModels(),
+ *         activateModel(), getSSEStream(), terminateJob(), reviveJob() 等
+ * 被调方：
+ *   views/admin/Dashboard.vue → 管理端所有功能
+ */
 import request from "./request";
 
 export const getDashboard = () => request.get("/admin/dashboard");

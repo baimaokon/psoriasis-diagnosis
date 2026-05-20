@@ -1,3 +1,9 @@
+<!--
+Login.vue — 管理员登录页
+────────────────────────
+路由：/admin/login
+功能：用户名+密码登录表单 → 调用 api/auth.js adminLogin() → 成功后写入 session → 跳转 /admin/dashboard
+-->
 <template>
   <div class="login-container">
     <div class="login-box">

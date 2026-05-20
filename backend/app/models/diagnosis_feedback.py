@@ -1,3 +1,12 @@
+"""
+diagnosis_feedback.py — 诊断反馈表（diagnosis_feedback）
+────────────────────────────────────────────────────────
+字段：id, record_id(FK→diagnosis_records), user_id(FK→users),
+      is_correct, corrected_label, comment, created_at
+作用：记录用户对AI诊断结果的纠错反馈，实现"人机协同"闭环。
+      每条诊断记录只允许一次反馈（uselist=False 一对一关系）。
+消费方：routes/feedback.py — 提交反馈、查询统计、计算 AI 准确率
+"""
 from datetime import datetime
 
 from app.extensions import db

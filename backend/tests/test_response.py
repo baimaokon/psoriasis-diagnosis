@@ -1,50 +1,22 @@
-import pytest
+"""统一响应格式测试 (功能测试 2 项：success / error)"""
 
 from app.utils.response import error, success
 
 
-class TestSuccess:
-    def test_default_structure(self):
-        result = success()
-        assert result == {"code": 0, "message": "操作成功", "data": None}
+class TestUnifiedResponse:
+    def test_success_format(self):
+        """success()：默认格式、自定义 data/message、falsy 值保留"""
+        assert success() == {"code": 0, "message": "操作成功", "data": None}
+        assert success({"id": 1})["data"] == {"id": 1}
+        assert success(message="诊断完成")["message"] == "诊断完成"
+        assert success(data=0)["data"] == 0
+        assert success(data=[])["data"] == []
 
-    def test_with_data(self):
-        result = success({"id": 1, "name": "test"})
-        assert result["code"] == 0
-        assert result["data"] == {"id": 1, "name": "test"}
-
-    def test_custom_message(self):
-        result = success(message="诊断完成")
-        assert result["message"] == "诊断完成"
-        assert result["code"] == 0
-
-    def test_data_is_none_when_not_provided(self):
-        result = success()
-        assert result["data"] is None
-
-    def test_preserves_falsy_data(self):
-        result = success(data=0)
-        assert result["data"] == 0
-
-    def test_preserves_empty_list(self):
-        result = success(data=[])
-        assert result["data"] == []
-
-
-class TestError:
-    def test_default_structure(self):
-        result = error()
-        assert result == {"code": 1, "message": "操作失败", "data": None}
-
-    def test_custom_message(self):
-        result = error("用户名已存在")
-        assert result["message"] == "用户名已存在"
-
-    def test_custom_code(self):
-        result = error("未找到", code=404)
-        assert result["code"] == 404
-        assert result["data"] is None
-
-    def test_data_is_always_none(self):
-        result = error("错误")
-        assert result["data"] is None
+    def test_error_format(self):
+        """error()：默认格式、自定义 code/message、data 恒为 None"""
+        assert error() == {"code": 1, "message": "操作失败", "data": None}
+        r = error("用户名已存在")
+        assert r["message"] == "用户名已存在"
+        r = error("未找到", code=404)
+        assert r["code"] == 404
+        assert r["data"] is None

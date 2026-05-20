@@ -1,3 +1,17 @@
+"""
+app/__init__.py — Flask 应用工厂
+─────────────────────────────────
+create_app() 是整个后端的启动入口，按以下顺序初始化：
+  1. 加载 config.py 配置（数据库、密钥、路径、CORS）
+  2. 创建存储目录（uploads/heatmaps/models/checkpoints/logs）
+  3. 初始化 SQLAlchemy（db.init_app）
+  4. 注册 5 个 Blueprint（test/auth/user/admin/feedback）
+  5. 注册文件服务端点（/api/files/* 和 /api/files/datasets/*）
+  6. 开发模式下自动建表并创建默认账户（admin/demo，随机密码）
+被 run.py 调用：from app import create_app → app = create_app() → app.run()
+前端通过 http://localhost:5000 访问此后端。
+"""
+
 import logging
 import secrets
 from pathlib import Path

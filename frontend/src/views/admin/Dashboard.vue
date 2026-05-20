@@ -1,3 +1,16 @@
+<!--
+Dashboard.vue — 管理端仪表盘（核心页面，集成全部管理功能）
+─────────────────────────────────────────────────────────────
+路由：/admin/dashboard
+功能模块：
+  1. 顶部统计卡片：普通用户数/模型版本数/诊断记录数
+  2. 数据集概览：总图像数+类别分布表+按类别浏览样本
+  3. 训练任务管理：配置超参数→启动训练→SSE实时进度折线图→终止/复活
+  4. 模型版本管理：版本列表→性能对比→一键上线(热切换)→删除
+API对接：api/admin.js → 全部管理端 API
+后端对接：routes/admin.py → 全部 /api/admin/* 端点
+SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
+-->
 <template>
   <div class="dashboard">
     <el-row :gutter="16" class="stat-row">

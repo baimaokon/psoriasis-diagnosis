@@ -1,3 +1,10 @@
+<!--
+AdminLayout.vue — 管理端布局组件
+────────────────────────────────
+提供管理端的页面框架：左侧导航菜单 + 顶部标题栏 + <router-view> 内容区。
+路由 /admin/* 下的所有子路由均渲染在此布局中。
+依赖：store/modules/session.js（管理员名、登出）
+-->
 <template>
   <el-container class="layout">
     <el-header class="header">

@@ -1,3 +1,19 @@
+"""
+model_factory.py — 模型工厂
+───────────────────────────
+职责：
+  1. 构建三种骨干网络（EfficientNet-B0/ResNet50/InceptionV3）→ build_model()
+     使用 ImageNet 预训练权重，替换最后的全连接分类头
+  2. 冻结骨干层，仅训练分类头 → freeze_backbone_layers()
+  3. 遍历模型找到最后一个卷积层，供 Grad-CAM 使用 → find_last_conv_layer()
+被调方：
+  services/inference_service.py → 加载在线模型用于推理
+  services/training_service.py → 构建待训练的模型
+依赖：
+  仅依赖 torchvision（无数据库依赖）
+  SUPPORTED_BACKBONES 常量被 routes/admin.py 的参数规范使用
+"""
+
 from torch import nn
 from torchvision import models
 

@@ -1,3 +1,9 @@
+<!--
+DiagnoseUploader.vue — 图像上传组件（Diagnose.vue 的子组件）
+──────────────────────────────────────────────────────────────
+封装 el-upload 的拖拽上传逻辑：文件格式校验、数量限制(10张)、文件大小限制(10MB)
+父组件：views/user/Diagnose.vue
+-->
 <template>
   <el-card class="upload-card" shadow="hover">
     <template #header>

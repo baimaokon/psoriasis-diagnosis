@@ -1,3 +1,12 @@
+/**
+ * api/user.js — 用户端 API 封装
+ * ─────────────────────────────
+ * 对接后端 routes/user.py（/api/user/*）
+ * export: uploadDiagnose(), batchDiagnose(), getRecords(), downloadReport()
+ * 被调方：
+ *   views/user/Diagnose.vue → 上传诊断
+ *   views/user/Records.vue → 历史记录查询
+ */
 import request from "./request";
 
 export const diagnose = (formData) =>

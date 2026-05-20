@@ -1,3 +1,15 @@
+<!--
+Diagnose.vue — 用户端在线诊断页（核心页面）
+────────────────────────────────────────────
+路由：/user/diagnose
+功能：
+  左侧：拖拽/点击上传皮肤图像（最多10张，JPG/PNG/BMP/WEBP）
+  右侧：诊断队列（预处理→特征提取→模型推理→热力图 四阶段进度展示）
+  底部：诊断结果区（缩略图+疾病名称+置信度进度条+Grad-CAM热力图）
+子组件：components/user/DiagnoseUploader.vue、DiagnoseResultCard.vue、ImageDisplay.vue
+API对接：api/user.js → uploadDiagnose()/batchDiagnose()
+后端对接：routes/user.py → POST /api/user/diagnose、/api/user/diagnose/batch
+-->
 <template>
   <div class="diagnose-container">
     <el-row :gutter="20">

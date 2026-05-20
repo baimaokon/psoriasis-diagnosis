@@ -1,3 +1,10 @@
+<!--
+Experiments.vue — 管理端实验对比页
+───────────────────────────────────
+路由：/admin/experiments
+功能：多训练任务横向对比（验证准确率、F1等指标），训练曲线可视化。
+后端对接：routes/admin.py → GET /api/admin/experiments/compare、/api/admin/training/<id>/visualization
+-->
 <template>
   <div class="experiments-container">
     <el-tabs type="border-card">

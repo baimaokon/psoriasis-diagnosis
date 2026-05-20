@@ -1,3 +1,15 @@
+/**
+ * utils/auth.js — 前端认证工具函数
+ * ────────────────────────────────
+ * 职责：
+ *   - Token/session 的读写操作（localStorage）
+ *   - 双角色（普通用户/管理员）独立 session 管理
+ *   - 判断当前活跃角色、是否拥有某角色 session
+ * 被调方：
+ *   router/index.js → 路由守卫 getActiveRole(), hasRoleSession(), getToken()
+ *   api/request.js → 请求拦截器注入 Bearer Token
+ *   store/modules/session.js → 底层存储
+ */
 // 双角色 session 管理：用户端(0)和管理端(1)的 token/用户信息独立存储
 // 同一浏览器可同时持有两个角色的登录态，通过 activeRole 切换
 const TOKEN_KEYS = {

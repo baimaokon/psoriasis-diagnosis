@@ -1,3 +1,10 @@
+"""
+config.py — 系统全局配置中心
+─────────────────────────────
+职责：集中管理数据库连接、安全密钥、文件存储路径、会话策略等所有配置项。
+被 app/__init__.py（Flask工厂函数）通过 app.config.from_object() 加载。
+连接关系：读取 backend/.env 环境变量 → 注入 Flask app.config 字典 → 各模块通过 current_app.config 消费。
+"""
 import os
 import secrets
 from datetime import timedelta

@@ -1,3 +1,16 @@
+"""
+services/ — 核心业务逻辑层
+───────────────────────────
+本层封装所有与数据库和前端无关的纯业务逻辑，是系统的"大脑"。
+  inference_service.py → 推理引擎（模型加载+分类预测+Grad-CAM）
+  training_service.py → 训练管理器（训练执行+SSE事件发布+Checkpoint管理）
+  dataset_service.py → 数据集服务（目录扫描+分层划分+样本构建）
+  model_factory.py → 模型工厂（三种骨干网络构建+分类头替换+权重冻结）
+  quality_service.py → 数据集质量分析（模糊检测+重复检测+划分可视化）
+  report_service.py → PDF 诊断报告生成（fpdf2 + 中文渲染）
+在 app/__init__.py create_app() 中不直接依赖本层，通过 routes 间接调用。
+"""
+
 from .dataset_service import (
     build_classification_samples,
     build_train_val_test_split,

@@ -1,3 +1,9 @@
+<!--
+DiagnoseResultCard.vue — 诊断结果卡片组件（Diagnose.vue 的子组件）
+──────────────────────────────────────────────────────────────────
+展示单张图像的诊断结果：缩略图、疾病名称、置信度、Grad-CAM热力图叠加效果
+父组件：views/user/Diagnose.vue
+-->
 <template>
   <el-card class="result-card" shadow="hover">
     <template #header>

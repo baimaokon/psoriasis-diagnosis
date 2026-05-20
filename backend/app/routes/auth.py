@@ -1,3 +1,20 @@
+"""
+auth.py — 认证路由（/api/auth/*）
+──────────────────────────────────
+端点：
+  POST /api/auth/register  — 用户注册（用户名≥3位，密码≥6位）
+  POST /api/auth/login     — 普通用户登录（role=0）
+  POST /api/auth/admin/login — 管理员登录（role=1）
+  GET  /api/auth/profile   — 获取当前用户信息（需 Bearer Token）
+依赖：
+  models/user.py → 用户 CRUD
+  utils/auth.py → create_token() 签发 JWT、login_required 装饰器
+  utils/response.py → success()/error() 统一响应
+前端对接：
+  frontend/src/api/auth.js → login()/register()/getProfile()
+  frontend/src/router/index.js → 路由守卫校验 Token
+"""
+
 from flask import Blueprint, g, jsonify, request
 
 from app.models import User, db

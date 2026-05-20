@@ -1,3 +1,14 @@
+/**
+ * api/request.js — Axios 请求/响应拦截器
+ * ─────────────────────────────────────
+ * 职责：
+ *   1. 创建 Axios 实例，baseURL=/api，超时30s
+ *   2. 请求拦截器：自动从 session 中提取 Bearer Token 注入 Authorization 头
+ *   3. 响应拦截器：统一解包 {code, message, data}，code≠0 时弹错误提示
+ *   4. 401 时自动清除登录态并重定向到登录页
+ * 被调方：
+ *   api/auth.js、api/user.js、api/admin.js、api/feedback.js → 所有 API 模块
+ */
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import { getToken, removeToken, getActiveRole, clearRoleAuth } from "@/utils/auth";

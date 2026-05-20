@@ -1,3 +1,21 @@
+/**
+ * router/index.js — Vue Router 路由定义 + 全局导航守卫
+ * ─────────────────────────────────────────────────────
+ * 职责：
+ *   1. 定义全站路由表：用户端 /user/* 和管理端 /admin/* 两套布局
+ *   2. 全局 beforeEach 守卫实现双角色认证隔离：
+ *      - role=0（普通用户）→ 仅可访问 /user/* 路由
+ *      - role=1（管理员）  → 仅可访问 /admin/* 路由
+ *      - 两个角色拥有独立的 session 空间
+ *   3. 路由懒加载（动态 import），按需分chunk加载页面组件
+ * 依赖：
+ *   utils/auth.js → getActiveRole(), hasRoleSession(), getToken()
+ *   components/UserLayout.vue → 用户端布局（导航栏+内容区）
+ *   components/AdminLayout.vue → 管理端布局（侧边栏+内容区）
+ *   views/user/*.vue → 用户端页面组件
+ *   views/admin/*.vue → 管理端页面组件
+ *   store/modules/session.js → 登录态持久化
+ */
 import { createRouter, createWebHistory } from "vue-router";
 import { getActiveRole, getToken, hasRoleSession } from "@/utils/auth";
 

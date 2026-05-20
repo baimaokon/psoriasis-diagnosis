@@ -1,3 +1,14 @@
+"""
+model_version.py — 模型版本表（model_versions）
+───────────────────────────────────────────────
+字段：id, name, backbone, model_path, params_json, metrics_json, labels_json,
+      is_active(是否在线), created_at
+关键设计：is_active 全局唯一（同时只有一个在线模型），训练完成后自动创建版本。
+消费方：
+  routes/admin.py — 模型列表、上线激活、删除
+  services/inference_service.py — 加载 is_active=True 的模型执行推理
+  services/training_service.py — 训练完成时写入新版本
+"""
 import json
 from datetime import datetime
 

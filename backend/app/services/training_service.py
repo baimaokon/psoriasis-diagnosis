@@ -1,3 +1,25 @@
+"""
+training_service.py — 训练管理器 + 事件发布中心
+───────────────────────────────────────────────
+职责：
+  TrainingManager — 训练生命周期管理：
+    1. 启动训练线程（异步执行，不阻塞 Flask 主进程）
+    2. 每个 Epoch 结束后通过 TrainEventHub 发布进度事件
+    3. Checkpoint 自动保存与恢复（支持断点续训）
+    4. 训练完成自动创建 ModelVersion 记录
+    5. 僵尸任务恢复（服务重启后检查 running 状态的任务）
+  TrainEventHub — 发布/订阅模式的事件总线：
+    - 训练线程发布 "job_update" / "epoch_summary" 事件
+    - SSE 端点订阅事件队列，推送到前端浏览器
+    - 解耦训练线程与 HTTP 响应层
+被调方：
+  routes/admin.py — 所有训练相关端点（启动/终止/复活/SSE流）
+依赖：
+  models/training_job.py、model_version.py
+  services/dataset_service.py → 数据加载与划分
+  services/model_factory.py → 模型构建
+"""
+
 import copy
 import json
 import math

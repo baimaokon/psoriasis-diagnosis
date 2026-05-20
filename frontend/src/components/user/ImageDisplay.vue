@@ -1,3 +1,9 @@
+<!--
+ImageDisplay.vue — 图像展示组件（Diagnose.vue 的子组件）
+──────────────────────────────────────────────────────────
+展示原图与热力图的对比视图，支持缩放和切换。
+父组件：views/user/Diagnose.vue
+-->
 <template>
   <div class="image-item">
     <div class="img-header">

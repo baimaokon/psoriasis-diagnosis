@@ -1,3 +1,11 @@
+<!--
+UserLayout.vue — 用户端布局组件
+────────────────────────────────
+提供用户端的页面框架：顶部导航栏 + <router-view> 内容区。
+导航栏包含：系统logo、诊断页入口、历史记录入口、用户信息、登出按钮。
+路由 /user/* 下的所有子路由均渲染在此布局中。
+依赖：store/modules/session.js（用户名、登出）
+-->
 <template>
   <el-container class="layout">
     <el-header class="header">

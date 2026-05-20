@@ -1,3 +1,12 @@
+"""
+model_path.py — 模型文件路径解析
+───────────────────────────────
+兼容历史绝对路径与当前相对路径两种存储方式，
+安全地将模型路径解析到模型目录下。
+消费方：
+  services/inference_service.py → 加载在线模型权重
+  routes/admin.py → 模型上线前校验文件存在性、删除模型文件
+"""
 from pathlib import Path
 
 

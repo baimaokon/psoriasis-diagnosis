@@ -1,3 +1,22 @@
+"""
+feedback.py — 诊断反馈路由（/api/feedback/*）
+─────────────────────────────────────────────
+实现"人机协同"纠错闭环：
+  用户对 AI 诊断结果标记正确/错误 → 系统统计准确率 → 指导模型迭代
+端点：
+  GET  /api/feedback/labels         — 获取可选诊断标签列表（供纠错下拉框使用）
+  POST /api/feedback/submit         — 提交反馈（每条记录限一次）
+  GET  /api/feedback/record/<id>    — 查询单条记录的反馈状态
+  GET  /api/feedback/my             — 当前用户的反馈列表
+  GET  /api/feedback/batch          — 批量查询多条记录的反馈状态
+  GET  /api/feedback/stats          — 基于反馈的 AI 准确率统计
+依赖：
+  models/diagnosis_feedback.py、diagnosis_record.py
+  utils/label_mapping.py → LABEL_ZH_MAP 提供可纠错标签
+前端对接：
+  frontend/src/api/feedback.js → 反馈 API 封装
+"""
+
 from flask import Blueprint, g, jsonify, request
 
 from app.models import DiagnosisFeedback, DiagnosisRecord, db
