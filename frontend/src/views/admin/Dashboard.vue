@@ -68,6 +68,9 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
                 <el-icon><Refresh /></el-icon>
                 刷新
               </el-button>
+              <el-button size="small" text type="primary" @click="$router.push('/admin/datasets')">
+                管理 <el-icon><ArrowRight /></el-icon>
+              </el-button>
             </div>
           </template>
           <el-form label-width="110px" size="default">
@@ -563,7 +566,7 @@ import {
   User, Cpu, Document, DataAnalysis, Folder, Refresh, VideoCamera,
   Loading, CircleCheck, EditPen, Setting, QuestionFilled, VideoPlay,
   Memo, List, InfoFilled, Box, Tickets, Search, View, Picture, ZoomIn,
-  Tools, DataBoard
+  Tools, DataBoard, ArrowRight
 } from '@element-plus/icons-vue';
 import {
   activateModel,

@@ -11,6 +11,7 @@ AdminLayout.vue — 管理端布局组件
       <div class="title">银屑病辅助诊断管理端</div>
       <div class="menu">
         <el-button text @click="go('/admin/dashboard')">训练与监控</el-button>
+        <el-button text @click="go('/admin/datasets')">数据集管理</el-button>
         <el-dropdown @command="handleCommand">
           <span class="user-info" style="cursor: pointer">
             {{ sessionStore.user?.username || '管理员' }}

@@ -31,10 +31,11 @@ const routes = [
     component: UserLayout,
     meta: { requiresAuth: true, role: "0" },
     children: [
+      { path: "dashboard", component: () => import("@/views/user/Dashboard.vue") },
       { path: "diagnose", component: () => import("@/views/user/Diagnose.vue") },
       { path: "records", component: () => import("@/views/user/Records.vue") },
       { path: "profile", component: () => import("@/views/user/Profile.vue") },
-      { path: "", redirect: "/user/diagnose" },
+      { path: "", redirect: "/user/dashboard" },
     ],
   },
   {
@@ -43,6 +44,7 @@ const routes = [
     meta: { requiresAuth: true, role: "1" },
     children: [
       { path: "dashboard", component: () => import("@/views/admin/Dashboard.vue") },
+      { path: "datasets", component: () => import("@/views/admin/DatasetManager.vue") },
       { path: "", redirect: "/admin/dashboard" },
     ],
   },

@@ -6,6 +6,7 @@ user.py — 用户端诊断路由（/api/user/*）
   POST /api/user/diagnose/batch — 批量诊断（最多10张，并发处理）
   GET  /api/user/records        — 分页查询诊断历史（支持按日期/病种/置信度筛选）
   GET  /api/user/records/<id>/report — 下载 PDF 诊断报告
+  GET  /api/user/dashboard      — 诊断仪表盘（总次数/本月/平均置信度/疾病分布）
 全部端点需 @login_required（普通用户 role=0）。
 安全措施：7步文件验证（扩展名→大小→魔数→PIL完整性→尺寸→保存校验）
 依赖：
@@ -28,6 +29,7 @@ from werkzeug.utils import secure_filename
 from app.models import DiagnosisRecord, User, db
 from app.services import generate_report_response, inference_engine
 from app.utils import error, login_required, success
+from app.utils.label_mapping import get_label_info
 
 
 user_bp = Blueprint("user", __name__, url_prefix="/api/user")
@@ -276,6 +278,42 @@ def my_records():
     return jsonify(
         success({"list": rows, "page": page, "limit": limit, "total": pagination.total})
     )
+
+
+@user_bp.route("/dashboard", methods=["GET"])
+@login_required
+def dashboard():
+    """用户诊断仪表盘：总次数/本月/平均置信度/疾病分布/最近记录"""
+    from datetime import datetime
+    from sqlalchemy import func
+
+    base = DiagnosisRecord.query.filter_by(user_id=g.user_id)
+    total = base.count()
+    this_month = base.filter(
+        DiagnosisRecord.created_at >= datetime.now().replace(day=1)
+    ).count() if total > 0 else 0
+    avg_conf = db.session.query(func.avg(DiagnosisRecord.confidence)).filter(
+        DiagnosisRecord.user_id == g.user_id
+    ).scalar()
+    avg_conf = round(float(avg_conf or 0), 2)
+
+    disease_dist = {}
+    for r in base.order_by(DiagnosisRecord.id.desc()).limit(500).all():
+        info = get_label_info(r.predicted_label)
+        zh = info["label_zh"]
+        disease_dist[zh] = disease_dist.get(zh, 0) + 1
+    # 按数量降序排列
+    disease_dist = dict(sorted(disease_dist.items(), key=lambda x: x[1], reverse=True))
+
+    recent = [r.to_dict() for r in base.order_by(DiagnosisRecord.created_at.desc()).limit(5)]
+
+    return jsonify(success({
+        "total": total,
+        "this_month": this_month,
+        "avg_confidence": avg_conf,
+        "disease_distribution": disease_dist,
+        "recent": recent,
+    }))
 
 
 @user_bp.route("/diagnose/batch", methods=["POST"])

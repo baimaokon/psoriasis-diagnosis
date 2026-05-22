@@ -54,3 +54,11 @@ export const createTrainEventSource = (token) => {
   const safeToken = encodeURIComponent(token || "");
   return new EventSource(`/api/admin/train/stream?token=${safeToken}`);
 };
+
+// 数据集管理
+export const listDatasetDirs = () => request.get("/admin/dataset/list-dirs");
+export const addDatasetImage = (formData) =>
+  request.post("/admin/dataset/add-image", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+    timeout: 30000,
+  });

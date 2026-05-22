@@ -23,6 +23,7 @@ SSE 流认证：通过查询参数 ?token= 传递 JWT，在 _decode_admin_stream
 import json
 import queue
 import time
+import uuid
 from pathlib import Path
 
 import jwt
@@ -729,3 +730,62 @@ def error_cases_analysis():
         cases.append(row)
         
     return jsonify(success(cases))
+
+
+# ========== 数据集管理端点 ==========
+
+@admin_bp.route("/dataset/list-dirs", methods=["GET"])
+@admin_required
+def dataset_list_dirs():
+    """列出 storage/datasets/ 下所有可用数据集目录"""
+    dataset_root = Path(current_app.config["STORAGE_DIR"]) / "datasets"
+    dirs = []
+    if dataset_root.exists():
+        for d in sorted(dataset_root.iterdir()):
+            if d.is_dir():
+                # 统计该目录下图片总数
+                img_count = 0
+                class_count = 0
+                class_dirs = [c for c in d.iterdir() if c.is_dir()]
+                for cd in class_dirs:
+                    count = len([f for f in cd.rglob("*") if f.is_file() and f.suffix.lower() in {'.jpg','.jpeg','.png','.bmp','.webp'}])
+                    if count > 0:
+                        class_count += 1
+                        img_count += count
+                dirs.append({
+                    "name": d.name,
+                    "path": str(d),
+                    "image_count": img_count,
+                    "class_count": class_count,
+                })
+    return jsonify(success(dirs))
+
+
+@admin_bp.route("/dataset/add-image", methods=["POST"])
+@admin_required
+def dataset_add_image():
+    """向指定类别目录上传新图片"""
+    dataset_dir = request.form.get("dataset_dir", str(current_app.config["DATASET_DIR"]))
+    class_name = (request.form.get("class_name") or "").strip()
+    if not class_name:
+        return jsonify(error("请指定类别名称")), 400
+    if "image" not in request.files:
+        return jsonify(error("请上传图片文件")), 400
+
+    file = request.files["image"]
+    if not file.filename:
+        return jsonify(error("文件名为空")), 400
+
+    suffix = Path(file.filename).suffix.lower()
+    if suffix not in {".jpg", ".jpeg", ".png", ".bmp", ".webp"}:
+        return jsonify(error(f"不支持的图片格式: {suffix}")), 400
+
+    target_dir = Path(dataset_dir) / class_name
+    target_dir.mkdir(parents=True, exist_ok=True)
+    safe_name = f"{uuid.uuid4().hex}{suffix}"
+    try:
+        file.save(str(target_dir / safe_name))
+    except Exception as exc:
+        return jsonify(error(f"文件保存失败: {exc}")), 500
+
+    return jsonify(success({"filename": safe_name, "class": class_name}, message="添加成功"))

@@ -11,6 +11,7 @@ UserLayout.vue — 用户端布局组件
     <el-header class="header">
       <div class="title">银屑病图像辅助诊断</div>
       <div class="menu">
+        <el-button text @click="go('/user/dashboard')">诊断概览</el-button>
         <el-button text @click="go('/user/diagnose')">图像诊断</el-button>
         <el-button text @click="go('/user/records')">历史记录</el-button>
         <el-button text @click="go('/user/profile')">个人信息</el-button>

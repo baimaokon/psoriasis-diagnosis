@@ -51,3 +51,5 @@ export const downloadReport = async (recordId) => {
 
 export const myRecords = (params) => request.get("/user/records", { params });
 
+export const getDashboard = () => request.get("/user/dashboard");
+
