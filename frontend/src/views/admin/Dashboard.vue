@@ -561,7 +561,6 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
 
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import {
   User, Cpu, Document, DataAnalysis, Folder, Refresh, VideoCamera,
   Loading, CircleCheck, EditPen, Setting, QuestionFilled, VideoPlay,
@@ -1041,6 +1040,10 @@ onUnmounted(() => {
   gap: 16px;
 }
 
+.stat-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
 .stat-icon {
   width: 60px;
   height: 60px;
@@ -1049,7 +1052,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   color: white;
-  flex-shrink: 0; /* 防止图标被压缩 */
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .user-icon {

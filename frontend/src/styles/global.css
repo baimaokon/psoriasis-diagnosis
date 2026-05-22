@@ -2,6 +2,20 @@
   box-sizing: border-box;
 }
 
+:root {
+  --el-color-primary: #409eff;
+  --el-color-primary-light: #66b1ff;
+  --el-color-success: #67c23a;
+  --el-color-warning: #e6a23c;
+  --el-color-danger: #f56c6c;
+  --el-border-radius-base: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
 html,
 body,
 #app {
@@ -10,9 +24,26 @@ body,
   min-height: 100%;
   font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   color: #1f2d3d;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   color: inherit;
 }
+
+/* 全局卡片悬停动效 */
+.el-card.is-hover-shadow:hover {
+  transform: translateY(-2px);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* 全局按钮动效 */
+.el-button { transition: all var(--transition-fast); }
+
+/* 页面过渡 */
+.page-fade-enter-active, .page-fade-leave-active {
+  transition: opacity var(--transition-normal);
+}
+.page-fade-enter-from, .page-fade-leave-to { opacity: 0; }
 

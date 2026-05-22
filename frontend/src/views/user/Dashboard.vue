@@ -132,16 +132,20 @@ const pieOption = computed(() => {
   const names = Object.keys(dist);
   if (names.length === 0) return null;
   return {
-    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    legend: { type: 'scroll', orient: 'vertical', right: 10, top: 20, bottom: 20 },
+    color: ['#409eff','#67c23a','#e6a23c','#f56c6c','#9060eb','#36cfc9','#ff85c0','#597ef7','#73d13d','#ffa940'],
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)', backgroundColor: 'rgba(0,0,0,0.8)', borderWidth: 0, textStyle: { color: '#fff' } },
+    legend: { type: 'scroll', orient: 'vertical', right: 10, top: 20, bottom: 20, textStyle: { fontSize: 12 } },
     series: [{
       type: 'pie',
-      radius: ['40%', '70%'],
+      radius: ['45%', '72%'],
       center: ['35%', '50%'],
       avoidLabelOverlap: false,
-      itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 2 },
+      animationType: 'scale',
+      animationEasing: 'elasticOut',
+      animationDuration: 800,
+      itemStyle: { borderRadius: 6, borderColor: '#fff', borderWidth: 2 },
       data: names.map(name => ({ name, value: dist[name] })),
-      emphasis: { label: { fontSize: 16, fontWeight: 'bold' } },
+      emphasis: { label: { fontSize: 16, fontWeight: 'bold' }, scaleSize: 8 },
     }],
   };
 });

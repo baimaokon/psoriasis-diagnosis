@@ -12,7 +12,17 @@
 import { createApp } from "vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+// 按需导入图标（仅注册项目实际使用的 ~50 个，避免全量 200+ 图标增加构建体积）
+import
+{
+  Aim, ArrowDown, ArrowRight, Back, Box, Calendar, ChatLineSquare,
+  CircleCheck, CircleCheckFilled, Clock, CloseBold, Cpu, DataAnalysis,
+  DataBoard, Document, Download, EditPen, Folder, Grid, HotWater,
+  InfoFilled, List, Loading, Management, Memo, Picture, PictureFilled,
+  PieChart, QuestionFilled, Refresh, Search, Select, Setting, Switch,
+  Tickets, Tools, TrendCharts, Trophy, Upload, UploadFilled, User,
+  UserFilled, VideoCamera, VideoPlay, View, Warning, WarningFilled, ZoomIn,
+} from "@element-plus/icons-vue";
 
 import App from "./App.vue";
 import router from "@/router";
@@ -30,7 +40,16 @@ sessionStore.initSession();
 app.use(router);
 app.use(ElementPlus);
 
-Object.entries(ElementPlusIconsVue).forEach(([name, component]) => {
+const icons = {
+  Aim, ArrowDown, ArrowRight, Back, Box, Calendar, ChatLineSquare,
+  CircleCheck, CircleCheckFilled, Clock, CloseBold, Cpu, DataAnalysis,
+  DataBoard, Document, Download, EditPen, Folder, Grid, HotWater,
+  InfoFilled, List, Loading, Management, Memo, Picture, PictureFilled,
+  PieChart, QuestionFilled, Refresh, Search, Select, Setting, Switch,
+  Tickets, Tools, TrendCharts, Trophy, Upload, UploadFilled, User,
+  UserFilled, VideoCamera, VideoPlay, View, Warning, WarningFilled, ZoomIn,
+};
+Object.entries(icons).forEach(([name, component]) => {
   app.component(name, component);
 });
 
