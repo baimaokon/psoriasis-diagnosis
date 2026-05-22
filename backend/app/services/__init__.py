@@ -6,7 +6,6 @@ services/ — 核心业务逻辑层
   training_service.py → 训练管理器（训练执行+SSE事件发布+Checkpoint管理）
   dataset_service.py → 数据集服务（目录扫描+分层划分+样本构建）
   model_factory.py → 模型工厂（三种骨干网络构建+分类头替换+权重冻结）
-  quality_service.py → 数据集质量分析（模糊检测+重复检测+划分可视化）
   report_service.py → PDF 诊断报告生成（fpdf2 + 中文渲染）
 在 app/__init__.py create_app() 中不直接依赖本层，通过 routes 间接调用。
 """
@@ -25,7 +24,6 @@ from .model_factory import (
     find_last_conv_layer,
     list_available_backbones,
 )
-from .quality_service import analyze_dataset_quality, generate_split_visualization
 from .report_service import generate_report_response
 from .training_service import (
     TrainingManager,
@@ -51,8 +49,6 @@ __all__ = [
     "build_model",
     "find_last_conv_layer",
     "list_available_backbones",
-    "analyze_dataset_quality",
-    "generate_split_visualization",
     "TrainingManager",
     "TrainEventHub",
     "get_train_param_spec",

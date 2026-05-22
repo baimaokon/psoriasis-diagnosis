@@ -293,140 +293,6 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
           </div>
         </el-card>
 
-        <!-- 新增：数据质量分析卡片 -->
-        <el-card class="card-block" shadow="hover">
-          <template #header>
-            <div class="header-row">
-              <div class="header-left">
-                <el-icon :size="18" color="#67c23a"><Tools /></el-icon>
-                <span>数据质量分析</span>
-              </div>
-              <el-tag v-if="qualityReport" type="success" effect="dark">
-                质量分: {{ qualityReport.quality_score }}%
-              </el-tag>
-            </div>
-          </template>
-
-          <el-tabs v-model="qualityActiveTab" type="border-card">
-            <el-tab-pane label="质量报告" name="quality">
-              <el-form size="small" label-width="100px" style="margin-bottom: 12px">
-                <el-form-item label="模糊阈值">
-                  <el-input-number
-                    v-model="blurThreshold"
-                    :min="10"
-                    :max="500"
-                    :step="10"
-                    size="small"
-                  />
-                  <el-tooltip content="Laplacian方差阈值，越小越严格" placement="top">
-                    <el-icon style="margin-left: 8px; cursor: help"><QuestionFilled /></el-icon>
-                  </el-tooltip>
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    size="small"
-                    :loading="qualityLoading"
-                    @click="loadQualityReport"
-                  >
-                    <el-icon><DataBoard /></el-icon>
-                    生成报告
-                  </el-button>
-                </el-form-item>
-              </el-form>
-
-              <div v-if="qualityReport" v-loading="qualityLoading" class="quality-content">
-                <el-descriptions :column="2" border size="small">
-                  <el-descriptions-item label="总样本数">
-                    {{ qualityReport.total_images }}
-                  </el-descriptions-item>
-                  <el-descriptions-item label="模糊样本数">
-                    {{ qualityReport.blur_samples }}
-                  </el-descriptions-item>
-                  <el-descriptions-item label="模糊样本比例">
-                    {{ qualityReport.blur_ratio }}%
-                  </el-descriptions-item>
-                  <el-descriptions-item label="质量分">
-                    {{ qualityReport.quality_score }}%
-                  </el-descriptions-item>
-                </el-descriptions>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="模糊样本" name="blurs">
-              <el-table
-                :data="qualityReport?.blur_samples_data || []"
-                border
-                stripe
-                max-height="360"
-              >
-                <el-table-column prop="filename" label="文件名" min-width="180" />
-                <el-table-column prop="blur_score" label="模糊分" width="100" />
-                <el-table-column label="预览" width="100">
-                  <template #default="{ row }">
-                    <el-image
-                      :src="row.url"
-                      fit="cover"
-                      lazy
-                      style="width: 72px; height: 72px;"
-                    />
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="重复图片" name="duplicates">
-              <el-empty v-if="(!qualityReport?.duplicate_images_data || qualityReport.duplicate_images_data.length === 0)" description="未检测到重复图片" :image-size="60" />
-              <el-table
-                v-else
-                :data="qualityReport.duplicate_images_data"
-                border
-                stripe
-                max-height="360"
-              >
-                <el-table-column prop="filename" label="文件名" min-width="180" />
-                <el-table-column prop="duplicate_of" label="重复于" min-width="180" show-overflow-tooltip />
-                <el-table-column label="预览" width="100">
-                  <template #default="{ row }">
-                    <el-image
-                      :src="row.url"
-                      fit="cover"
-                      lazy
-                      style="width: 72px; height: 72px;"
-                    />
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="各类别详情" name="classes">
-              <el-table
-                :data="qualityClassReportList"
-                border
-                stripe
-                max-height="360"
-              >
-                <el-table-column prop="zh_name" label="类别" min-width="140" />
-                <el-table-column prop="total" label="样本数" width="80" align="center" />
-                <el-table-column prop="blur_count" label="模糊数" width="80" align="center" />
-                <el-table-column label="模糊率" width="100" align="center">
-                  <template #default="{ row }">
-                    <el-tag :type="row.blur_rate > 20 ? 'danger' : row.blur_rate > 10 ? 'warning' : 'success'" size="small">
-                      {{ row.blur_rate }}%
-                    </el-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="avg_blur_score" label="平均清晰度" width="110" align="center">
-                  <template #default="{ row }">
-                    {{ row.avg_blur_score.toFixed(0) }}
-                  </template>
-                </el-table-column>
-                <el-table-column label="平均尺寸" width="140" align="center">
-                  <template #default="{ row }">
-                    {{ row.avg_width }}×{{ row.avg_height }}
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-tab-pane>
-          </el-tabs>
-        </el-card>
       </el-col>
 
       <el-col :xs="24" :lg="15">
@@ -706,7 +572,6 @@ import {
   deleteRecord,
   deleteTrainJob,
   getDashboard,
-  getDatasetQualityReport,
   getDatasetSummary,
   getClassSamples,
   getModels,
@@ -738,23 +603,6 @@ const trainPayload = reactive({
   name: "银屑病云训练任务",
   dataset_dir: "",
   params: {},
-});
-
-// 数据质量分析状态
-const qualityReport = ref(null);
-const qualityActiveTab = ref("quality");
-const blurThreshold = ref(100);
-const qualityLoading = ref(false);
-
-// 将后端 class_reports 字典转为表格可用的数组
-const qualityClassReportList = computed(() => {
-  const reports = qualityReport.value?.class_reports;
-  if (!reports) return [];
-  return Object.entries(reports).map(([name, info]) => ({
-    name,
-    ...info,
-    blur_rate: info.total > 0 ? Math.round(info.blur_count / info.total * 100) : 0,
-  }));
 });
 
 // 数据集浏览器相关状态
@@ -810,21 +658,6 @@ const applyJobRow = (jobRow) => {
   );
 };
 
-const loadQualityReport = async () => {
-  qualityLoading.value = true;
-  try {
-    const res = await getDatasetQualityReport({
-      dataset_dir: datasetDirInput.value || undefined,
-      blur_threshold: blurThreshold.value,
-    });
-    qualityReport.value = res.data;
-    ElMessage.success("质量报告生成成功");
-  } catch {
-    ElMessage.error("质量分析失败");
-  } finally {
-    qualityLoading.value = false;
-  }
-};
 
 const loadDashboard = async () => {
   const res = await getDashboard();
@@ -1395,12 +1228,6 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
 }
-
-.quality-content {
-  margin-top: 16px;
-  min-height: 100px;
-}
-
 
 .sample-overlay {
   position: absolute;

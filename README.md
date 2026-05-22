@@ -12,7 +12,7 @@
 - 一键生成中文 PDF 诊断报告
 
 **管理端**
-- 数据集管理：类别分布统计、数据质量分析（模糊检测 + SHA256 去重）
+- 数据集管理：类别分布统计、数据集浏览
 - 模型训练：支持模型选择、超参数调整、K 折交叉验证
 - SSE 实时推送训练进度（loss、准确率曲线）
 - 模型版本管理：多版本并存，一键上线/下线切换，支持下载
@@ -59,7 +59,6 @@
 │       │   ├── training_service.py    # 训练流程管理 + DDP
 │       │   ├── dataset_service.py     # 数据集加载与划分
 │       │   ├── model_factory.py       # 模型构建（预训练 + 冻结）
-│       │   ├── quality_service.py     # 数据质量分析
 │       │   └── report_service.py      # PDF 报告生成
 │       ├── utils/              # 工具函数
 │       │   ├── auth.py         # JWT 装饰器（login_required）

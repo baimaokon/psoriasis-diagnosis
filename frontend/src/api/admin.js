@@ -36,22 +36,6 @@ export function getRandomSamples(params = {}) {
   });
 }
 
-export function getDatasetQualityReport(params = {}) {
-  return request({
-    url: "/admin/dataset/quality-report",
-    method: "get",
-    params,
-    timeout: 300000,  // 质量分析需扫描全量图片，耗时较长
-  });
-}
-
-export function getDatasetSplitVisualization(params = {}) {
-  return request({
-    url: "/admin/dataset/split-visualization",
-    method: "get",
-    params,
-  });
-}
 
 export const getTrainParamSpec = () => request.get("/admin/train/param-spec");
 export const startTrain = (payload) => request.post("/admin/train/start", payload, { timeout: 60000 });

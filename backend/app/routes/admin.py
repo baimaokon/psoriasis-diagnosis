@@ -3,7 +3,7 @@ admin.py — 管理端路由（/api/admin/*）
 ─────────────────────────────────────
 端点（全部需 @admin_required，仅 role=1 可访问）：
   仪表盘     GET  /api/admin/dashboard
-  数据集     GET  /api/admin/dataset/summary | samples/random | quality-report | split-visualization
+  数据集     GET  /api/admin/dataset/summary | samples/random
   训练管理   POST /api/admin/train/start | GET /param-spec | GET /jobs
              POST /api/admin/train/jobs/<id>/terminate | revive | DELETE
   模型管理   GET  /api/admin/models | POST /models/<id>/activate | DELETE /models/<id>
@@ -14,7 +14,7 @@ admin.py — 管理端路由（/api/admin/*）
 SSE 流认证：通过查询参数 ?token= 传递 JWT，在 _decode_admin_stream_token() 中验证
 依赖：
   所有 models、services/training_service.py（TrainingManager + TrainEventHub）
-  services/dataset_service.py、quality_service.py
+  services/dataset_service.py
 前端对接：
   frontend/src/views/admin/Dashboard.vue → 管理端仪表盘
   frontend/src/api/admin.js → 所有管理端 API 调用
@@ -31,8 +31,6 @@ from sqlalchemy import or_
 
 from app.models import DiagnosisRecord, ModelVersion, TrainingJob, User, db
 from app.services import (
-    analyze_dataset_quality,
-    generate_split_visualization,
     get_dataset_summary,
     get_train_param_spec,
     has_job_checkpoint,
@@ -255,36 +253,6 @@ def random_samples():
         return jsonify(success(result))
     except Exception as exc:
         return jsonify(error(str(exc))), 500
-
-
-@admin_bp.route("/dataset/quality-report", methods=["GET"])
-@admin_required
-def dataset_quality_report():
-    """获取数据集质量分析报告"""
-    dataset_dir = request.args.get("dataset_dir") or str(current_app.config["DATASET_DIR"])
-    blur_threshold = float(request.args.get("blur_threshold", 100.0))
-    
-    try:
-        report = analyze_dataset_quality(dataset_dir, blur_threshold)
-        return jsonify(success(report))
-    except Exception as exc:
-        return jsonify(error(str(exc))), 400
-
-
-@admin_bp.route("/dataset/split-visualization", methods=["GET"])
-@admin_required
-def dataset_split_visualization():
-    """获取数据集划分可视化数据"""
-    dataset_dir = request.args.get("dataset_dir") or str(current_app.config["DATASET_DIR"])
-    val_ratio = float(request.args.get("val_ratio", 0.15))
-    test_ratio = float(request.args.get("test_ratio", 0.15))
-    seed = int(request.args.get("seed", 42))
-    
-    try:
-        split_data = generate_split_visualization(dataset_dir, val_ratio, test_ratio, seed)
-        return jsonify(success(split_data))
-    except Exception as exc:
-        return jsonify(error(str(exc))), 400
 
 
 @admin_bp.route("/train/param-spec", methods=["GET"])
