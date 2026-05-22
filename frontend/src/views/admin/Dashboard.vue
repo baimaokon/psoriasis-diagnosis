@@ -420,21 +420,42 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
               <el-descriptions-item label="消息">{{ selectedJob.message }}</el-descriptions-item>
             </el-descriptions>
 
-            <div class="epoch-log-wrap">
-              <el-table
-                  :data="selectedJob.logs || []"
-                  border
-                  stripe
-                  height="300"
-                  style="margin-top: 12px"
-              >
-                <el-table-column prop="epoch" label="Epoch" width="80" align="center" />
-                <el-table-column prop="train_loss" label="Train Loss" width="110" />
-                <el-table-column prop="val_loss" label="Val Loss" width="110" />
-                <el-table-column prop="val_accuracy" label="Val Acc" width="110" />
-                <el-table-column prop="learning_rate" label="LR" width="130" />
-              </el-table>
-            </div>
+            <!-- 训练曲线 — SSE 实时更新 -->
+            <el-row :gutter="16" style="margin-top: 16px">
+              <el-col :xs="24" :lg="12">
+                <div class="chart-card">
+                  <div class="chart-title">Loss 曲线</div>
+                  <v-chart v-if="lossChartOption" class="train-chart" :option="lossChartOption" autoresize />
+                  <el-empty v-else description="等待训练数据..." :image-size="48" />
+                </div>
+              </el-col>
+              <el-col :xs="24" :lg="12">
+                <div class="chart-card">
+                  <div class="chart-title">准确率 & F1</div>
+                  <v-chart v-if="accChartOption" class="train-chart" :option="accChartOption" autoresize />
+                  <el-empty v-else description="等待训练数据..." :image-size="48" />
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-collapse style="margin-top:12px">
+              <el-collapse-item title="Epoch 明细日志">
+                <div class="epoch-log-wrap">
+                  <el-table
+                      :data="selectedJob.logs || []"
+                      border
+                      stripe
+                      max-height="300"
+                  >
+                    <el-table-column prop="epoch" label="Epoch" width="80" align="center" />
+                    <el-table-column prop="train_loss" label="Train Loss" width="110" />
+                    <el-table-column prop="val_loss" label="Val Loss" width="110" />
+                    <el-table-column prop="val_accuracy" label="Val Acc" width="110" />
+                    <el-table-column prop="learning_rate" label="LR" width="130" />
+                  </el-table>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
           </div>
         </el-card>
 
@@ -545,8 +566,11 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
                 </el-link>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="100" fixed="right" align="center">
+            <el-table-column label="操作" width="170" fixed="right" align="center">
               <template #default="{ row }">
+                <el-button size="small" type="primary" link @click="showRecordDetail(row)">
+                  <el-icon><InfoFilled /></el-icon> 详情
+                </el-button>
                 <el-button size="small" type="danger" plain @click="removeRecord(row)">
                   删除
                 </el-button>
@@ -556,17 +580,71 @@ SSE连接：直接使用 EventSource 连接 /api/admin/train/stream?token=xxx
         </el-card>
       </el-col>
     </el-row>
+
+    <!-- 诊断详情弹窗 -->
+    <el-dialog v-model="recordDetailVisible" title="诊断详情" width="760px" destroy-on-close>
+      <div v-if="recordDetail" class="detail-body">
+        <el-row :gutter="16">
+          <el-col :span="12">
+            <div class="detail-img-box">
+              <div class="detail-img-label">原图</div>
+              <el-image :src="recordDetail.image_url" fit="contain" class="detail-img" :preview-src-list="[recordDetail.image_url]" preview-teleported />
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="detail-img-box">
+              <div class="detail-img-label">热力图</div>
+              <el-image :src="recordDetail.heatmap_url" fit="contain" class="detail-img" :preview-src-list="[recordDetail.heatmap_url]" preview-teleported />
+            </div>
+          </el-col>
+        </el-row>
+        <el-descriptions :column="2" border style="margin-top: 16px">
+          <el-descriptions-item label="诊断用户">{{ recordDetail.username }}</el-descriptions-item>
+          <el-descriptions-item label="诊断结果">
+            <el-tag type="primary" size="large">{{ recordDetail.predicted_label_zh }}</el-tag>
+          </el-descriptions-item>
+          <el-descriptions-item label="置信度">
+            <el-progress :percentage="(recordDetail.confidence * 100)" :stroke-width="10"
+              :color="recordDetail.confidence >= 0.9 ? '#67c23a' : recordDetail.confidence >= 0.7 ? '#e6a23c' : '#f56c6c'" />
+          </el-descriptions-item>
+          <el-descriptions-item label="诊断时间">{{ recordDetail.created_at }}</el-descriptions-item>
+          <el-descriptions-item label="英文类别" :span="2">{{ recordDetail.predicted_label_en }}</el-descriptions-item>
+        </el-descriptions>
+        <div v-if="recordDetail.predictions?.length" style="margin-top: 16px">
+          <div class="section-title">Top-3 预测结果</div>
+          <el-table :data="recordDetail.predictions" border stripe size="small">
+            <el-table-column type="index" label="#" width="50" align="center" />
+            <el-table-column prop="label_zh" label="中文病名" min-width="140" />
+            <el-table-column prop="label" label="英文类别" min-width="200" show-overflow-tooltip />
+            <el-table-column label="置信度" width="160" align="center">
+              <template #default="{ row: r }">
+                <el-progress :percentage="(r.confidence * 100)" :stroke-width="8"
+                  :color="r.confidence >= 0.5 ? '#409eff' : '#c0c4cc'" :show-text="true">
+                  <span>{{ (r.confidence * 100).toFixed(2) }}%</span>
+                </el-progress>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   User, Cpu, Document, DataAnalysis, Folder, Refresh, VideoCamera,
   Loading, CircleCheck, EditPen, Setting, QuestionFilled, VideoPlay,
   Memo, List, InfoFilled, Box, Tickets, Search, View, Picture, ZoomIn,
   Tools, DataBoard, ArrowRight
 } from '@element-plus/icons-vue';
+import { use } from 'echarts/core';
+import { LineChart } from 'echarts/charts';
+import { CanvasRenderer } from 'echarts/renderers';
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import VChart from 'vue-echarts';
 import {
   activateModel,
   createTrainEventSource,
@@ -588,12 +666,17 @@ import {
 } from "@/api/admin";
 import { getToken } from "@/utils/auth";
 
+use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent]);
+
 const dashboard = reactive({});
 const datasetSummary = reactive({ classes: [] });
 const trainParamSpec = ref([]);
 const jobs = ref([]);
 const models = ref([]);
 const records = ref([]);
+const recordDetailVisible = ref(false);
+const recordDetail = ref(null);
+const showRecordDetail = (row) => { recordDetail.value = row; recordDetailVisible.value = true; };
 const selectedJob = ref(null);
 const trainLoading = ref(false);
 const trainEventSource = ref(null);
@@ -635,6 +718,43 @@ const getProgressColor = (progress) => {
   if (progress >= 50) return '#e6a23c'; // 黄色
   return '#409eff'; // 蓝色
 };
+
+// 训练曲线 — 数据来自 SSE 实时推送的 selectedJob.logs
+const lossChartOption = computed(() => {
+  const logs = selectedJob.value?.logs || [];
+  if (logs.length === 0) return null;
+  const epochs = logs.map(l => l.epoch);
+  return {
+    color: ['#409eff', '#e6a23c'],
+    tooltip: { trigger: 'axis', backgroundColor: 'rgba(0,0,0,0.8)', borderWidth: 0, textStyle: { color: '#fff', fontSize: 12 } },
+    legend: { data: ['训练Loss', '验证Loss'], top: 0, textStyle: { fontSize: 11 } },
+    grid: { top: 32, right: 16, bottom: 24, left: 48 },
+    xAxis: { type: 'category', data: epochs, axisLabel: { fontSize: 10 } },
+    yAxis: { type: 'value', name: 'Loss', axisLabel: { fontSize: 10 }, splitLine: { lineStyle: { color: '#ebeef5', type: 'dashed' } } },
+    series: [
+      { name: '训练Loss', type: 'line', data: logs.map(l => l.train_loss), smooth: true, symbol: 'none', lineStyle: { width: 2 } },
+      { name: '验证Loss', type: 'line', data: logs.map(l => l.val_loss), smooth: true, symbol: 'none', lineStyle: { width: 2 } },
+    ],
+  };
+});
+
+const accChartOption = computed(() => {
+  const logs = selectedJob.value?.logs || [];
+  if (logs.length === 0) return null;
+  const epochs = logs.map(l => l.epoch);
+  return {
+    color: ['#67c23a', '#9060eb'],
+    tooltip: { trigger: 'axis', backgroundColor: 'rgba(0,0,0,0.8)', borderWidth: 0, textStyle: { color: '#fff', fontSize: 12 }, valueFormatter: (v) => (v * 100).toFixed(2) + '%' },
+    legend: { data: ['验证准确率', '验证F1'], top: 0, textStyle: { fontSize: 11 } },
+    grid: { top: 32, right: 16, bottom: 24, left: 48 },
+    xAxis: { type: 'category', data: epochs, axisLabel: { fontSize: 10 } },
+    yAxis: { type: 'value', name: '百分比', axisLabel: { fontSize: 10, formatter: (v) => (v * 100).toFixed(0) + '%' }, splitLine: { lineStyle: { color: '#ebeef5', type: 'dashed' } } },
+    series: [
+      { name: '验证准确率', type: 'line', data: logs.map(l => l.val_accuracy), smooth: true, symbol: 'none', lineStyle: { width: 2 } },
+      { name: '验证F1', type: 'line', data: logs.map(l => l.val_f1 || 0), smooth: true, symbol: 'none', lineStyle: { width: 2 } },
+    ],
+  };
+});
 
 const applyPreset = (key) => {
   trainParamSpec.value.forEach((item) => {
@@ -1171,6 +1291,23 @@ onUnmounted(() => {
   margin-top: 12px;
 }
 
+.chart-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ebeef5;
+}
+.chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #303133;
+  margin-bottom: 8px;
+}
+.train-chart {
+  width: 100%;
+  height: 260px;
+}
+
 .epoch-log-wrap {
   margin-top: 4px;
 }
@@ -1288,6 +1425,13 @@ onUnmounted(() => {
   background: #f5f7fa;
   color: #c0c4cc;
 }
+
+/* 诊断详情弹窗 */
+.detail-body { padding: 0; }
+.detail-img-box { border-radius: 8px; overflow: hidden; border: 1px solid #ebeef5; }
+.detail-img-label { font-size: 13px; font-weight: 600; color: #606266; padding: 8px 12px; background: #f5f7fa; border-bottom: 1px solid #ebeef5; }
+.detail-img { width: 100%; height: 240px; cursor: pointer; }
+.section-title { font-size: 14px; font-weight: 600; color: #303133; margin-bottom: 8px; }
 
 /* 响应式调整 */
 @media (max-width: 768px) {

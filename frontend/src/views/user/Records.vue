@@ -64,8 +64,12 @@ API对接：api/user.js → getRecords()、downloadReport()
             <el-progress :percentage="parseFloat((row.confidence * 100).toFixed(2))" :color="getConfidenceColor(row.confidence)" :stroke-width="12" />
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="210" align="center">
+        <el-table-column label="操作" width="260" align="center">
           <template #default="{ row }">
+            <el-button size="small" type="primary" link @click="showDetail(row)">
+              <el-icon><InfoFilled /></el-icon> 详情
+            </el-button>
+            <el-divider direction="vertical" />
             <el-link :href="row.image_url" target="_blank" type="primary" :underline="false">
               <el-icon><View /></el-icon> 原图
             </el-link>
@@ -85,13 +89,62 @@ API对接：api/user.js → getRecords()、downloadReport()
         <el-pagination v-model:current-page="query.page" v-model:page-size="query.limit" :total="total" :page-sizes="[10, 20, 50]" layout="total, sizes, prev, pager, next" background @size-change="loadData" @current-change="handlePageChange" />
       </div>
     </el-card>
+
+    <!-- 诊断详情弹窗 -->
+    <el-dialog v-model="detailVisible" title="诊断详情" width="760px" destroy-on-close>
+      <div v-if="detailRecord" class="detail-body">
+        <el-row :gutter="16">
+          <el-col :span="12">
+            <div class="detail-img-box">
+              <div class="detail-img-label">原图</div>
+              <el-image :src="detailRecord.image_url" fit="contain" class="detail-img" :preview-src-list="[detailRecord.image_url]" preview-teleported />
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="detail-img-box">
+              <div class="detail-img-label">热力图</div>
+              <el-image :src="detailRecord.heatmap_url" fit="contain" class="detail-img" :preview-src-list="[detailRecord.heatmap_url]" preview-teleported />
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-descriptions :column="2" border style="margin-top: 16px">
+          <el-descriptions-item label="诊断结果">
+            <el-tag type="primary" size="large">{{ detailRecord.predicted_label_zh }}</el-tag>
+          </el-descriptions-item>
+          <el-descriptions-item label="置信度">
+            <el-progress :percentage="(detailRecord.confidence * 100)" :stroke-width="10"
+              :color="detailRecord.confidence >= 0.9 ? '#67c23a' : detailRecord.confidence >= 0.7 ? '#e6a23c' : '#f56c6c'" />
+          </el-descriptions-item>
+          <el-descriptions-item label="英文类别">{{ detailRecord.predicted_label_en }}</el-descriptions-item>
+          <el-descriptions-item label="诊断时间">{{ detailRecord.created_at }}</el-descriptions-item>
+        </el-descriptions>
+
+        <div v-if="detailRecord.predictions?.length" style="margin-top: 16px">
+          <div class="section-title">Top-3 预测结果</div>
+          <el-table :data="detailRecord.predictions" border stripe size="small">
+            <el-table-column type="index" label="#" width="50" align="center" />
+            <el-table-column prop="label_zh" label="中文病名" min-width="140" />
+            <el-table-column prop="label" label="英文类别" min-width="200" show-overflow-tooltip />
+            <el-table-column label="置信度" width="160" align="center">
+              <template #default="{ row: r }">
+                <el-progress :percentage="(r.confidence * 100)" :stroke-width="8"
+                  :color="r.confidence >= 0.5 ? '#409eff' : '#c0c4cc'" :show-text="true">
+                  <span>{{ (r.confidence * 100).toFixed(2) }}%</span>
+                </el-progress>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { Clock, Calendar, View, Search, Select, Warning, Download } from '@element-plus/icons-vue';
+import { Clock, Calendar, View, Search, Select, Warning, Download, InfoFilled } from '@element-plus/icons-vue';
 import { downloadReport, myRecords } from "@/api/user";
 import { batchGetFeedback } from "@/api/feedback";
 
@@ -101,6 +154,10 @@ const loading = ref(false);
 const query = reactive({ page: 1, limit: 20 });
 const filters = reactive({ dateRange: null, disease: '', minConf: 0 });
 const feedbackMap = ref({});
+
+const detailVisible = ref(false);
+const detailRecord = ref(null);
+const showDetail = (row) => { detailRecord.value = row; detailVisible.value = true; };
 
 const getConfidenceColor = (c) => c >= 0.9 ? '#67c23a' : c >= 0.7 ? '#e6a23c' : '#f56c6c';
 
@@ -164,4 +221,10 @@ onMounted(loadData);
 .time-cell { display: flex; align-items: center; gap: 6px; color: #606266; font-size: 13px; }
 .diagnosis-text { font-weight: 500; color: #303133; }
 .pagination-wrapper { margin-top: 20px; display: flex; justify-content: flex-end; }
+
+.detail-body { padding: 0; }
+.detail-img-box { border-radius: 8px; overflow: hidden; border: 1px solid #ebeef5; }
+.detail-img-label { font-size: 13px; font-weight: 600; color: #606266; padding: 8px 12px; background: #f5f7fa; border-bottom: 1px solid #ebeef5; }
+.detail-img { width: 100%; height: 240px; cursor: pointer; }
+.section-title { font-size: 14px; font-weight: 600; color: #303133; margin-bottom: 8px; }
 </style>

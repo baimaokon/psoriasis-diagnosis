@@ -22,24 +22,41 @@ python -m pytest tests/ -q --tb=short     # 快速冒烟
 cd frontend
 npm install                               # 首次
 npm run dev                               # 启动前端 (http://127.0.0.1:5173)
+npm run build                             # 生产构建
 ```
 
 ## 架构总览
 
 ```
 frontend (Vue 3 + Vite :5173) ──proxy /api──> backend (Flask :5000) ──> MySQL
+       ECharts + Element Plus                         PyTorch + SSE
 ```
 
 **后端分层（4 层）**：
 1. `routes/` — HTTP 入口，5 个 Blueprint（test/auth/user/admin/feedback），只做参数提取和响应返回
-2. `services/` — 核心业务逻辑，不依赖 Flask request/response，可独立测试
+2. `services/` — 核心业务逻辑，不依赖 Flask request/response，可独立测试（inference_service/training_service/dataset_service/model_factory/report_service）
 3. `models/` — SQLAlchemy ORM，5 张表（User/DiagnosisRecord/DiagnosisFeedback/TrainingJob/ModelVersion）
-4. `utils/` — 工具函数（JWT 装饰器、统一响应格式、标签映射）
+4. `utils/` — 工具函数（JWT 装饰器、统一响应格式、标签映射、模型路径）
 
 **前端分层**：
 - `api/` — Axios 封装，`request.js` 统一注入 Token + 解包响应 + 401 跳转
 - `store/modules/session.js` — Pinia 双角色会话管理（role=0 用户，role=1 管理员）
 - `router/index.js` — 路由守卫，按 meta.role 限制页面访问
+- `views/user/` — Dashboard(仪表盘) / Diagnose(诊断) / Records(历史) / Profile(个人) / Login / Register
+- `views/admin/` — Dashboard(训练监控) / DatasetManager(数据集管理) / Login
+- `components/user/` — DiagnoseResultCard / DiagnoseUploader / ImageDisplay
+
+## 路由表
+
+| 路由 | 页面 | 说明 |
+|------|------|------|
+| `/user/dashboard` | Dashboard.vue | 默认首页，统计卡片 + 饼图 + 最近记录 |
+| `/user/diagnose` | Diagnose.vue | 批量图像诊断 |
+| `/user/records` | Records.vue | 历史记录查询筛选 |
+| `/user/profile` | Profile.vue | 个人信息 |
+| `/admin/dashboard` | admin/Dashboard.vue | 训练监控 + 数据集概览 + 模型管理 |
+| `/admin/datasets` | admin/DatasetManager.vue | 数据集浏览/切换/上传 |
+| `/login` `/register` `/admin/login` | 认证页面 | 登录/注册 |
 
 ## 关键设计
 
@@ -73,6 +90,11 @@ frontend (Vue 3 + Vite :5173) ──proxy /api──> backend (Flask :5000) ─�
 ### Grad-CAM
 - Hook 捕获最后卷积层特征图 → 全局平均池化梯度 → 加权求和 + ReLU → 双线性上采样 → 伪彩色叠加原图
 
+### 前端设计系统
+- `global.css` 定义 CSS 变量：`--el-color-primary/success/warning/danger` + `--shadow-sm/md/lg` + `--transition-fast/normal`
+- 图标按需导入：`main.js` 仅注册项目实际使用的 47 个图标（非全量 200+）
+- ElMessage/ElMessageBox 是服务 API，需在使用的组件中显式 import
+
 ## 注意事项
 
 - **Windows 开发**：`requirements.txt` 指定了 CUDA 12.1 版本，CPU 推理需手动改为 CPU 版 PyTorch
@@ -81,3 +103,5 @@ frontend (Vue 3 + Vite :5173) ──proxy /api──> backend (Flask :5000) ─�
 - **`config.py` 中 LOG_FILE** 在模块加载时求值，比 `create_app()` 早
 - 测试中的 `test_app` fixture 设置 `FLASK_ENV=testing` → `DEBUG=False`，`_seed_default_accounts_safe()` 不自动执行
 - `user.py` 中的 `imghdr` 在 Python 3.13 已弃用，后续需迁移
+- **RTX 3060 6GB 训练**：推荐 EfficientNet-B0 + freeze_backbone + batch_size=16；全量 33k 数据集约 4-6 小时
+- **ElMessage/ElMessageBox 必须显式 import**，全局 `app.use(ElementPlus)` 不注册服务 API
