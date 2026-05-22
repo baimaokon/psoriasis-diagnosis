@@ -65,6 +65,47 @@ class TestDatasetStatistics:
         assert d["total_images"] == 100 and d["class_count"] == 5
 
 
+class TestDatasetManagement:
+    """数据集浏览、上传、删除"""
+
+    def _make_jpeg_bytes(self):
+        from io import BytesIO
+        from PIL import Image
+        img = Image.new("RGB", (32, 32), color=(100, 100, 100))
+        buf = BytesIO()
+        img.save(buf, format="JPEG")
+        buf.seek(0)
+        return buf
+
+    def test_list_dirs(self, test_app):
+        """数据集目录列表→200"""
+        r = test_app.test_client().get("/api/admin/dataset/list-dirs",
+                                        headers=_admin_headers(test_app))
+        assert r.status_code == 200
+        assert r.get_json()["code"] == 0
+
+    def test_add_image_no_file_returns_400(self, test_app):
+        """未上传图片→400"""
+        r = test_app.test_client().post("/api/admin/dataset/add-image",
+                                         headers=_admin_headers(test_app),
+                                         data={"class_name": "test_class"})
+        assert r.status_code == 400
+
+    def test_delete_image_success(self, test_app, tmp_path):
+        """管理员删除图片：创建临时文件→删除→验证文件不存在"""
+        cls_dir = tmp_path / "eczema"
+        cls_dir.mkdir()
+        img = cls_dir / "test.jpg"
+        img.write_bytes(self._make_jpeg_bytes().getvalue())
+        with patch("app.services.dataset_service.resolve_dataset_path", return_value=tmp_path):
+            r = test_app.test_client().delete(
+                "/api/admin/dataset/image?image_path=eczema/test.jpg",
+                headers=_admin_headers(test_app))
+        assert r.status_code == 200
+        assert r.get_json()["code"] == 0
+        assert not img.exists()
+
+
 class TestModelManagement:
     """模型版本管理：JC-008"""
 

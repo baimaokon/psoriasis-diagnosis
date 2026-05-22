@@ -62,3 +62,4 @@ export const addDatasetImage = (formData) =>
     headers: { "Content-Type": "multipart/form-data" },
     timeout: 30000,
   });
+export const deleteDatasetImage = (params) => request.delete("/admin/dataset/image", { params });

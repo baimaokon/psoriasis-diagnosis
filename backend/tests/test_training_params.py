@@ -11,24 +11,21 @@ from app.services.training_service import (
 
 
 class TestTrainingParams:
-    def test_to_bool_conversion(self):
-        """布尔/字符串→布尔：True/False 直通，'1'/'true'/'yes'/'on'→True，其余→False"""
+    def test_type_sanitizers(self):
+        """类型转换：_to_bool / _safe_float / _safe_int 边界全覆盖"""
+        # _to_bool
         assert _to_bool(True) is True and _to_bool(False) is False
         for v in ("1", "true", "True", "TRUE", "yes", "YES", "on", "ON"):
             assert _to_bool(v) is True
         for v in ("0", "false", "no", "off", "random"):
             assert _to_bool(v) is False
-
-    def test_safe_float_conversion(self):
-        """字符串/数值→float：合法值正常转换，非法/NaN/Inf/None 返回默认值"""
+        # _safe_float
         assert _safe_float("3.14") == 3.14 and _safe_float("42") == 42.0
         assert _safe_float("abc", 0.5) == 0.5
         assert _safe_float(float("nan"), 0.0) == 0.0
         assert _safe_float(float("inf"), 0.0) == 0.0
         assert _safe_float(None, 0.5) == 0.5
-
-    def test_safe_int_conversion(self):
-        """字符串→int：合法值正常转换，非法/None 返回默认值"""
+        # _safe_int
         assert _safe_int("10") == 10
         assert _safe_int("abc", 5) == 5 and _safe_int(None, 7) == 7
 
@@ -47,11 +44,6 @@ class TestTrainingParams:
             assert key in params
         assert normalize_train_params({"epochs": 100})["epochs"] == 100
 
-    def test_normalize_backbone_specific_rules(self):
-        """InceptionV3 最小 image_size=299；ResNet50 覆写正常"""
-        assert normalize_train_params({"backbone": "inception_v3", "image_size": 128})["image_size"] == 299
-        assert normalize_train_params({"backbone": "resnet50"})["backbone"] == "resnet50"
-
     def test_normalize_split_mode_rules(self):
         """fixed 模式限制 val/test ratio ≤0.4；kfold 强制 k≥2"""
         p1 = normalize_train_params({"split_mode": "fixed", "val_ratio": 0.99, "test_ratio": 0.99})
@@ -60,10 +52,12 @@ class TestTrainingParams:
         assert p2["kfold_splits"] >= 2
 
     def test_normalize_boundary_values(self):
-        """缓存关闭清零、逐 epoch 验证上限、非法 float 钳位"""
+        """缓存关闭清零、逐 epoch 验证上限、非法 float 钳位、InceptionV3 最小尺寸"""
         p = normalize_train_params({"cache_images": False, "cache_limit": 2000})
         assert p["cache_limit"] == 0
         p = normalize_train_params({"validation_interval": 100, "epochs": 10})
         assert p["validation_interval"] == 10
         p = normalize_train_params({"learning_rate": -0.5})
         assert p["learning_rate"] >= 0.0
+        assert normalize_train_params({"backbone": "inception_v3", "image_size": 128})["image_size"] == 299
+        assert normalize_train_params({"backbone": "resnet50"})["backbone"] == "resnet50"

@@ -39,22 +39,18 @@ class TestInferenceEngineCore:
         sd = InferenceEngine._safe_torch_load(str(p), "cpu")
         assert isinstance(sd, dict)
 
-    def test_load_state_dict_compat_ddp_prefix(self):
-        """兼容 DDP 'module.' 前缀的权重"""
-        m = build_model("resnet50", num_classes=3, pretrained=False)
-        dd = m.state_dict()
-        ddp = {f"module.{k}": v for k, v in dd.items()}
-        m2 = build_model("resnet50", num_classes=3, pretrained=False)
-        InferenceEngine._load_state_dict_compat(m2, ddp)
-        # 验证加载后参数一致
-        for k in dd:
-            assert torch.equal(m.state_dict()[k], m2.state_dict()[k])
-
-    def test_load_state_dict_compat_normal(self):
-        """普通 state_dict（无 module. 前缀）正常加载"""
+    def test_load_state_dict_compat(self):
+        """权重兼容加载：普通 + DDP 'module.' 前缀均可正常加载"""
         m = build_model("resnet50", num_classes=3, pretrained=False)
         sd = m.state_dict()
+        # 普通 state_dict
         m2 = build_model("resnet50", num_classes=3, pretrained=False)
         InferenceEngine._load_state_dict_compat(m2, sd)
         for k in sd:
             assert torch.equal(m.state_dict()[k], m2.state_dict()[k])
+        # DDP 'module.' 前缀
+        ddp = {f"module.{k}": v for k, v in sd.items()}
+        m3 = build_model("resnet50", num_classes=3, pretrained=False)
+        InferenceEngine._load_state_dict_compat(m3, ddp)
+        for k in sd:
+            assert torch.equal(m.state_dict()[k], m3.state_dict()[k])

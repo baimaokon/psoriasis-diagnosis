@@ -8,19 +8,14 @@ from app.utils.label_mapping import LABEL_ZH_MAP, get_label_info
 
 
 class TestLabelMapping:
-    def test_label_info_exact_match(self):
-        """精确匹配返回中文、英文、显示名、银屑病标记"""
+    def test_label_info_lookup(self):
+        """精确匹配 + 银屑病标记：湿疹非银屑病，银屑病为 True"""
         info = get_label_info("1. Eczema 1677")
         assert info["label_zh"] == "湿疹" and info["label_en"] == "1. Eczema 1677"
-        assert info["matched"] is True
+        assert info["matched"] is True and info["is_psoriasis_related"] is False
         assert "湿疹" in info["label_display"] and "Eczema" in info["label_display"]
-        assert info["is_psoriasis_related"] is False
-
-    def test_psoriasis_label_detection(self):
-        """银屑病标签标记 is_psoriasis_related=True，非银屑病=False"""
         ps = get_label_info("7. Psoriasis pictures Lichen Planus and related diseases - 2k")
         assert ps["is_psoriasis_related"] is True and "银屑病" in ps["label_zh"]
-        assert get_label_info("1. Eczema 1677")["is_psoriasis_related"] is False
 
     def test_fallback_for_unknown_label(self):
         """未知标签回退：matched=False，空/None→「未知类别」"""

@@ -79,7 +79,11 @@
               <div v-for="img in classSamples" :key="img.relative_path" class="image-item">
                 <el-image :src="img.url" fit="cover" lazy class="thumb"
                   :preview-src-list="[img.url]" preview-teleported />
-                <div class="img-name">{{ img.filename }}</div>
+                <div class="img-name">
+                  <span class="img-name-text">{{ img.filename }}</span>
+                  <el-button size="small" type="danger" :icon="Delete" circle
+                    @click.stop="deleteImage(img)" />
+                </div>
               </div>
             </div>
             <el-empty v-else description="该类别暂无图片" :image-size="80" />
@@ -118,8 +122,9 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { Folder, Picture, Grid, Switch, List, PictureFilled, Upload, Refresh } from '@element-plus/icons-vue';
-import { getDatasetSummary, getClassSamples, listDatasetDirs, addDatasetImage } from "@/api/admin";
+import { Folder, Picture, Grid, Switch, List, PictureFilled, Upload, Refresh, Delete } from '@element-plus/icons-vue';
+import { getDatasetSummary, getClassSamples, listDatasetDirs, addDatasetImage, deleteDatasetImage } from "@/api/admin";
+import { ElMessageBox } from "element-plus";
 
 const loading = ref(true), samplesLoading = ref(false);
 const currentDir = ref(""), dirList = ref([]);
@@ -187,6 +192,23 @@ async function doUpload() {
   uploadFiles.value = []; uploadVisible.value = false;
   await loadData(); await loadClassSamples();
 }
+
+async function deleteImage(img) {
+  try {
+    await ElMessageBox.confirm(
+      `确认删除图片 "${img.filename}" 吗？此操作不可恢复。`,
+      "删除确认",
+      { type: "warning", confirmButtonText: "删除", cancelButtonText: "取消" },
+    );
+  } catch { return; }
+  try {
+    const params = { image_path: img.relative_path };
+    if (currentDir.value) params.dataset_dir = currentDir.value;
+    await deleteDatasetImage(params);
+    ElMessage.success("图片已删除");
+    await loadData(); await loadClassSamples();
+  } catch { /* 拦截器已提示 */ }
+}
 </script>
 
 <style scoped>
@@ -223,6 +245,7 @@ async function doUpload() {
 .image-item { text-align: center; border-radius: 10px; overflow: hidden; background: #fff; transition: all 0.25s ease; border: 1px solid #ebeef5; }
 .image-item:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); border-color: var(--el-color-primary-light); }
 .thumb { width: 100%; height: 140px; cursor: pointer; }
-.img-name { font-size: 11px; color: #909399; padding: 6px 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.img-name { display: flex; align-items: center; gap: 4px; padding: 4px 4px 4px 8px; }
+.img-name-text { font-size: 11px; color: #909399; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
 .pagination-wrap { margin-top: 16px; display: flex; justify-content: center; }
 </style>

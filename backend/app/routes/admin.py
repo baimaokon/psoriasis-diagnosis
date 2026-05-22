@@ -789,3 +789,31 @@ def dataset_add_image():
         return jsonify(error(f"文件保存失败: {exc}")), 500
 
     return jsonify(success({"filename": safe_name, "class": class_name}, message="添加成功"))
+
+
+@admin_bp.route("/dataset/image", methods=["DELETE"])
+@admin_required
+def dataset_delete_image():
+    """删除数据集中指定图片"""
+    from app.services.dataset_service import resolve_dataset_path
+
+    image_path = (request.args.get("image_path") or "").strip()
+    if not image_path:
+        return jsonify(error("请指定图片路径")), 400
+
+    dataset_dir = request.args.get("dataset_dir") or str(current_app.config["DATASET_DIR"])
+    root = resolve_dataset_path(dataset_dir)
+    if not root.exists():
+        return jsonify(error(f"数据集目录不存在: {root}")), 404
+
+    target = (root / Path(image_path)).resolve()
+    if not _is_sub_path(target, root):
+        return jsonify(error("非法路径")), 400
+    if not target.exists() or not target.is_file():
+        return jsonify(error("图片不存在")), 404
+
+    try:
+        target.unlink()
+        return jsonify(success({"deleted": str(target.relative_to(root))}, message="图片已删除"))
+    except Exception as exc:
+        return jsonify(error(f"删除失败: {exc}")), 500

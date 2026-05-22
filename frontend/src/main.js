@@ -17,7 +17,7 @@ import
 {
   Aim, ArrowDown, ArrowRight, Back, Box, Calendar, ChatLineSquare,
   CircleCheck, CircleCheckFilled, Clock, CloseBold, Cpu, DataAnalysis,
-  DataBoard, Document, Download, EditPen, Folder, Grid, HotWater,
+  DataBoard, Delete, Document, Download, EditPen, Folder, Grid, HotWater,
   InfoFilled, List, Loading, Management, Memo, Picture, PictureFilled,
   PieChart, QuestionFilled, Refresh, Search, Select, Setting, Switch,
   Tickets, Tools, TrendCharts, Trophy, Upload, UploadFilled, User,
@@ -43,7 +43,7 @@ app.use(ElementPlus);
 const icons = {
   Aim, ArrowDown, ArrowRight, Back, Box, Calendar, ChatLineSquare,
   CircleCheck, CircleCheckFilled, Clock, CloseBold, Cpu, DataAnalysis,
-  DataBoard, Document, Download, EditPen, Folder, Grid, HotWater,
+  DataBoard, Delete, Document, Download, EditPen, Folder, Grid, HotWater,
   InfoFilled, List, Loading, Management, Memo, Picture, PictureFilled,
   PieChart, QuestionFilled, Refresh, Search, Select, Setting, Switch,
   Tickets, Tools, TrendCharts, Trophy, Upload, UploadFilled, User,

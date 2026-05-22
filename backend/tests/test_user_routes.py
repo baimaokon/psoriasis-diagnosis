@@ -74,6 +74,45 @@ class TestDiagnoseUpload:
         assert d["heatmap_url"].startswith("/api/files/")
 
 
+class TestDashboard:
+    """用户仪表盘数据聚合"""
+
+    def _create_record(self, test_app):
+        from app.models import DiagnosisRecord, User, db
+        with test_app.app_context():
+            u = User.query.filter_by(username="demo").first()
+            if not u:
+                u = User(username="demo", role=0)
+                u.set_password("demo123")
+                db.session.add(u)
+                db.session.commit()
+            r = DiagnosisRecord(
+                user_id=u.id, image_path="uploads/test.jpg", heatmap_path="heatmaps/test.jpg",
+                predicted_label="1. Eczema 1677", confidence=0.92,
+            )
+            db.session.add(r)
+            db.session.commit()
+            return u.id
+
+    def test_dashboard_requires_auth(self, test_app):
+        """未登录→401"""
+        r = test_app.test_client().get("/api/user/dashboard")
+        assert r.status_code == 401
+
+    def test_dashboard_returns_stats(self, test_app):
+        """仪表盘返回 total/this_month/avg_confidence/disease_distribution/recent"""
+        uid = self._create_record(test_app)
+        with test_app.app_context():
+            token = create_token(user_id=uid, role=0)
+        r = test_app.test_client().get("/api/user/dashboard",
+                                        headers={"Authorization": f"Bearer {token}"})
+        assert r.status_code == 200
+        d = r.get_json()["data"]
+        for key in ("total", "this_month", "avg_confidence", "disease_distribution", "recent"):
+            assert key in d, f"缺少字段 {key}"
+        assert d["total"] >= 1
+
+
 class TestRecordsQuery:
     """历史诊断记录查询：JC-005"""
 
